@@ -25,7 +25,7 @@ void TP_Write_Byte(u8 num) {
 	u8 count = 0;
 	for(count = 0; count < 8; count++) {
 		if(num & 0x80) {
-			TDIN = 1; 
+			TDIN = 1;
 		} else {
 			TDIN = 0;
 		}
@@ -206,15 +206,15 @@ void TP_Save_Adjdata(void) {
 	write_buf[1] = temp >> 16;
 	write_buf[2] = temp >> 8;
 	write_buf[3] = temp;
-	ee_writebytes(write_buf,SAVE_ADDR_BASE + 4, 4);
+	ee_writebytes(write_buf, SAVE_ADDR_BASE + 4, 4);
 	//保存x偏移量
 	write_buf[0] = tp_dev.xoff >> 8;
 	write_buf[1] = tp_dev.xoff;
-	ee_writebytes(write_buf,SAVE_ADDR_BASE + 8, 2);
+	ee_writebytes(write_buf, SAVE_ADDR_BASE + 8, 2);
 	//保存y偏移量
 	write_buf[0] = tp_dev.yoff >> 8;
 	write_buf[1] = tp_dev.yoff;
-	ee_writebytes(write_buf,SAVE_ADDR_BASE + 10, 2);
+	ee_writebytes(write_buf, SAVE_ADDR_BASE + 10, 2);
 	//保存触屏类型
 	write_buf[0] = tp_dev.touchtype;
 	ee_writebytes(write_buf, SAVE_ADDR_BASE + 12, 1);
@@ -234,23 +234,23 @@ u8 TP_Get_Adjdata(void) {
 		// tempfac = AT24CXX_ReadLenByte(SAVE_ADDR_BASE, 4);
 		ee_readbytes(read_buf, SAVE_ADDR_BASE, 4);
 		tempfac = read_buf[3];
-		tempfac = tempfac+ read_buf[2]<<8;
-		tempfac = tempfac+ read_buf[1]<<16;
-		tempfac = tempfac+ read_buf[0]<<24;
-	
+		tempfac = tempfac + read_buf[2] << 8;
+		tempfac = tempfac + read_buf[1] << 16;
+		tempfac = tempfac + read_buf[0] << 24;
+
 		tp_dev.xfac = (float)tempfac / 100000000; //得到x校准参数
 		// tempfac = AT24CXX_ReadLenByte(SAVE_ADDR_BASE + 4, 4);
 		ee_readbytes(read_buf, SAVE_ADDR_BASE + 4, 4);
 		tempfac = read_buf[3];
-		tempfac = tempfac+ read_buf[2]<<8;
-		tempfac = tempfac+ read_buf[1]<<16;
-		tempfac = tempfac+ read_buf[0]<<24;
+		tempfac = tempfac + read_buf[2] << 8;
+		tempfac = tempfac + read_buf[1] << 16;
+		tempfac = tempfac + read_buf[0] << 24;
 		tp_dev.yfac = (float)tempfac / 100000000; //得到y校准参数
 		//得到x偏移量
 		// tp_dev.xoff = AT24CXX_ReadLenByte(SAVE_ADDR_BASE + 8, 2);
 		ee_readbytes(read_buf, SAVE_ADDR_BASE + 8, 2);
 		// tempfac = read_buf[3];
-		tp_dev.xoff = tp_dev.xoff + read_buf[1] << 8; 
+		tp_dev.xoff = tp_dev.xoff + read_buf[1] << 8;
 		tp_dev.xoff = tp_dev.xoff + read_buf[0] << 16;
 		//得到y偏移量
 		// tp_dev.yoff = AT24CXX_ReadLenByte(SAVE_ADDR_BASE + 10, 2);

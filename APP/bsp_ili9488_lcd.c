@@ -124,34 +124,26 @@ u16 LCD_ReadPoint(u16 x, u16 y) {
 
 void TFTLCD_GPIO_Init(void) {
 	GPIO_InitTypeDef  GPIO_InitStructure;
-
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB | RCC_APB2Periph_GPIOD | RCC_APB2Periph_GPIOE | RCC_APB2Periph_GPIOG, ENABLE); //使能PORTD,E,G时钟
-
-	//PORTD复用推挽输出
-	GPIO_InitStructure.GPIO_Pin = LCD_D0_PIN | LCD_D1_PIN | LCD_D2_PIN | LCD_D3_PIN | LCD_D13_PIN | LCD_D14_PIN | LCD_D15_PIN | LCD_NOE_PIN | LCD_NWE_PIN;				 //	//PORTD复用推挽输出
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP; 		 //复用推挽输出
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(GPIOD, &GPIO_InitStructure);
-	// quickly_gpioinit(LCD_D0_PORT, LCD_D0_PIN | LCD_D1_PIN | LCD_D2_PIN | LCD_D3_PIN | LCD_D13_PIN | LCD_D14_PIN | LCD_D15_PIN | LCD_NOE_PIN|LCD_NWE_PIN, GPIO_Speed_50MHz, GPIO_Mode_AF_PP, RCC_APB2Periph_GPIOE);
-	//PORTE复用推挽输出
-	GPIO_InitStructure.GPIO_Pin =  LCD_D4_PIN | LCD_D5_PIN | LCD_D6_PIN | LCD_D7_PIN | LCD_D8_PIN | LCD_D9_PIN | LCD_D10_PIN | LCD_D11_PIN | LCD_D12_PIN;				 //	//PORTD复用推挽输出
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;				 //	//PORTD复用推挽输出
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP; 		 //复用推挽输出
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(GPIOE, &GPIO_InitStructure);
-
-	//	//PORTG12复用推挽输出 A10
-	GPIO_InitStructure.GPIO_Pin = LCD_NE4_PIN | LCD_A10_PIN;	 //	//PORTG复用推挽输出
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP; 		 //复用推挽输出
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(GPIOG, &GPIO_InitStructure);
-
-	//背光控制管脚初始化
-	GPIO_InitStructure.GPIO_Pin = LCD_BL_PIN;				 //PB0 推挽输出 背光
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);	 //使能B端口时钟
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_9;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 //推挽输出
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
-	LCD_LED = 1;				//点亮背光
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//速度50MHz
+	GPIO_Init(GPIOB, &GPIO_InitStructure);	  //初始化GPIOB
+	GPIO_SetBits(GPIOB, GPIO_Pin_8 | GPIO_Pin_9);
+
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);	 //使能C端口时钟
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 //推挽输出
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//速度50MHz
+	GPIO_Init(GPIOC, &GPIO_InitStructure);	  //初始化GPIOC
+	GPIO_SetBits(GPIOC, GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12);
+
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);	 //使能D端口时钟
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 //推挽输出
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//速度50MHz
+	GPIO_Init(GPIOD, &GPIO_InitStructure);	  //初始化GPIOD
+	GPIO_SetBits(GPIOD, GPIO_Pin_2);
 }
 
 void TFTLCD_FSMC_Init(void) {
@@ -216,105 +208,107 @@ void TFTLCD_Init(void) {
 	u16 i;
 
 	TFTLCD_GPIO_Init();
-	TFTLCD_FSMC_Init();
+//	LCD_RES_Clr();//复位
+//	delay_ms(100);
+//	LCD_RES_Set();
+//	delay_ms(100);
+//	LCD_BLK_Clr();//打开背光
+//	delay_ms(100);
+//	LCD_WR_REG(0x11);     //Sleep out
+//	delay_ms(120);                //Delay 120ms
+//	LCD_WR_REG(0xB1);     //Normal mode
+//	LCD_WR_DATA8(0x05);
+//	LCD_WR_DATA8(0x3C);
+//	LCD_WR_DATA8(0x3C);
+//	LCD_WR_REG(0xB2);     //Idle mode
+//	LCD_WR_DATA8(0x05);
+//	LCD_WR_DATA8(0x3C);
+//	LCD_WR_DATA8(0x3C);
+//	LCD_WR_REG(0xB3);     //Partial mode
+//	LCD_WR_DATA8(0x05);
+//	LCD_WR_DATA8(0x3C);
+//	LCD_WR_DATA8(0x3C);
+//	LCD_WR_DATA8(0x05);
+//	LCD_WR_DATA8(0x3C);
+//	LCD_WR_DATA8(0x3C);
+//	LCD_WR_REG(0xB4);     //Dot inversion
+//	LCD_WR_DATA8(0x03);
+//	LCD_WR_REG(0xC0);     //AVDD GVDD
+//	LCD_WR_DATA8(0xAB);
+//	LCD_WR_DATA8(0x0B);
+//	LCD_WR_DATA8(0x04);
+//	LCD_WR_REG(0xC1);     //VGH VGL
+//	LCD_WR_DATA8(0xC5);   //C0
+//	LCD_WR_REG(0xC2);     //Normal Mode
+//	LCD_WR_DATA8(0x0D);
+//	LCD_WR_DATA8(0x00);
+//	LCD_WR_REG(0xC3);     //Idle
+//	LCD_WR_DATA8(0x8D);
+//	LCD_WR_DATA8(0x6A);
+//	LCD_WR_REG(0xC4);     //Partial+Full
+//	LCD_WR_DATA8(0x8D);
+//	LCD_WR_DATA8(0xEE);
+//	LCD_WR_REG(0xC5);     //VCOM
+//	LCD_WR_DATA8(0x0F);
+//	LCD_WR_REG(0xE0);     //positive gamma
+//	LCD_WR_DATA8(0x07);
+//	LCD_WR_DATA8(0x0E);
+//	LCD_WR_DATA8(0x08);
+//	LCD_WR_DATA8(0x07);
+//	LCD_WR_DATA8(0x10);
+//	LCD_WR_DATA8(0x07);
+//	LCD_WR_DATA8(0x02);
+//	LCD_WR_DATA8(0x07);
+//	LCD_WR_DATA8(0x09);
+//	LCD_WR_DATA8(0x0F);
+//	LCD_WR_DATA8(0x25);
+//	LCD_WR_DATA8(0x36);
+//	LCD_WR_DATA8(0x00);
+//	LCD_WR_DATA8(0x08);
+//	LCD_WR_DATA8(0x04);
+//	LCD_WR_DATA8(0x10);
+//	LCD_WR_REG(0xE1);     //negative gamma
+//	LCD_WR_DATA8(0x0A);
+//	LCD_WR_DATA8(0x0D);
+//	LCD_WR_DATA8(0x08);
+//	LCD_WR_DATA8(0x07);
+//	LCD_WR_DATA8(0x0F);
+//	LCD_WR_DATA8(0x07);
+//	LCD_WR_DATA8(0x02);
+//	LCD_WR_DATA8(0x07);
+//	LCD_WR_DATA8(0x09);
+//	LCD_WR_DATA8(0x0F);
+//	LCD_WR_DATA8(0x25);
+//	LCD_WR_DATA8(0x35);
+//	LCD_WR_DATA8(0x00);
+//	LCD_WR_DATA8(0x09);
+//	LCD_WR_DATA8(0x04);
+//	LCD_WR_DATA8(0x10);
+//	LCD_WR_REG(0xFC);
+//	LCD_WR_DATA8(0x80);
+//	LCD_WR_REG(0x3A);
+//	LCD_WR_DATA8(0x05);
+//	LCD_WR_REG(0x36);
+//	if(USE_HORIZONTAL == 0)LCD_WR_DATA8(0x08);
+//	else if(USE_HORIZONTAL == 1)LCD_WR_DATA8(0xC8);
+//	else if(USE_HORIZONTAL == 2)LCD_WR_DATA8(0x78);
+//	else LCD_WR_DATA8(0xA8);
+//	LCD_WR_REG(0x21);     //Display inversion
+//	LCD_WR_REG(0x29);     //Display on
+//	LCD_WR_REG(0x2A);     //Set Column Address
+//	LCD_WR_DATA8(0x00);
+//	LCD_WR_DATA8(0x1A);  //26
+//	LCD_WR_DATA8(0x00);
+//	LCD_WR_DATA8(0x69);   //105
+//	LCD_WR_REG(0x2B);     //Set Page Address
+//	LCD_WR_DATA8(0x00);
+//	LCD_WR_DATA8(0x01);    //1
+//	LCD_WR_DATA8(0x00);
+//	LCD_WR_DATA8(0xA0);    //160
+//	LCD_WR_REG(0x2C);
 
-	delay_ms(10);
-
-
-	LCD_WriteCmd(0Xda);
-	tftlcd_data.id = TFTLCD->LCD_DATA;	//dummy read
-	tftlcd_data.id = TFTLCD->LCD_DATA << 8;
-	LCD_WriteCmd(0Xdb);
-	tftlcd_data.id |= TFTLCD->LCD_DATA;	//dummy read
-	tftlcd_data.id |= TFTLCD->LCD_DATA;
-
-
-#ifdef TFTLCD_ILI9488
-	LCD_WriteCmd(0xE0); //P-Gamma
-	LCD_WriteData(0x00);
-	LCD_WriteData(0x13);
-	LCD_WriteData(0x18);
-	LCD_WriteData(0x04);
-	LCD_WriteData(0x0F);
-	LCD_WriteData(0x06);
-	LCD_WriteData(0x3A);
-	LCD_WriteData(0x56);
-	LCD_WriteData(0x4D);
-	LCD_WriteData(0x03);
-	LCD_WriteData(0x0A);
-	LCD_WriteData(0x06);
-	LCD_WriteData(0x30);
-	LCD_WriteData(0x3E);
-	LCD_WriteData(0x0F);
-
-	LCD_WriteCmd(0XE1); //N-Gamma
-	LCD_WriteData(0x00);
-	LCD_WriteData(0x13);
-	LCD_WriteData(0x18);
-	LCD_WriteData(0x01);
-	LCD_WriteData(0x11);
-	LCD_WriteData(0x06);
-	LCD_WriteData(0x38);
-	LCD_WriteData(0x34);
-	LCD_WriteData(0x4D);
-	LCD_WriteData(0x06);
-	LCD_WriteData(0x0D);
-	LCD_WriteData(0x0B);
-	LCD_WriteData(0x31);
-	LCD_WriteData(0x37);
-	LCD_WriteData(0x0F);
-
-	LCD_WriteCmd(0XC0);   //Power Control 1
-	LCD_WriteData(0x18); //Vreg1out
-	LCD_WriteData(0x17); //Verg2out
-
-	LCD_WriteCmd(0xC1);   //Power Control 2
-	LCD_WriteData(0x41); //VGH,VGL
-
-	LCD_WriteCmd(0xC5);   //Power Control 3
-	LCD_WriteData(0x00);
-	LCD_WriteData(0x1A); //Vcom
-	LCD_WriteData(0x80);
-
-	LCD_WriteCmd(0x36);   //Memory Access
-	LCD_WriteData(0x08);   //48
-
-	LCD_WriteCmd(0x3A);   // Interface Pixel Format
-	LCD_WriteData(0x55); //16bit
-
-	LCD_WriteCmd(0XB0);   // Interface Mode Control
-	LCD_WriteData(0x00);
-
-	LCD_WriteCmd(0xB1);   //Frame rate
-	LCD_WriteData(0xA0); //60Hz
-
-	LCD_WriteCmd(0xB4);   //Display Inversion Control
-	LCD_WriteData(0x02); //2-dot
-
-	LCD_WriteCmd(0XB6);   //RGB/MCU Interface Control
-	//	LCD_WriteData(0x02); //MCU RGB
-	//	LCD_WriteData(0x02); //Source,Gate scan dieection
-	LCD_WriteData(0x00);
-	LCD_WriteData(0x22);//0 GS SS SM ISC[3:0];其中GS SS控制显示方向，同时修改R36
-	LCD_WriteData(0x3B);
-
-	LCD_WriteCmd(0XE9);    // Set Image Function
-	LCD_WriteData(0x00);  //disable 24 bit data input
-
-	LCD_WriteCmd(0xF7);    // Adjust Control
-	LCD_WriteData(0xA9);
-	LCD_WriteData(0x51);
-	LCD_WriteData(0x2C);
-	LCD_WriteData(0x82);  // D7 stream, loose
-
-	LCD_WriteCmd(0x11);    //Sleep out
-	delay_ms(20);
-	LCD_WriteCmd(0x29);
-	LCD_WriteCmd(0x2C);
-#endif
-
-	LCD_Display_Dir(TFTLCD_DIR);		//0：竖屏  1：横屏  默认竖屏
-	screen_clear();
+//	LCD_Fill(0, 0, LCD_W, LCD_H, WHITE);	//初始化成白屏
+//	screen_clear();
 }
 
 //清屏函数

@@ -90,11 +90,11 @@ cmd_fail: /* 命令执行失败后，切记发送停止信号，避免影响I2C�
 	return 0;
 }
 
-/// @brief 
+/// @brief
 /// @param _pWriteBuf 数组
 /// @param _usAddress eeprom地址
 /// @param _usSize 写入长度
-/// @return 
+/// @return
 uint8_t ee_writebytes(uint8_t* _pWriteBuf, uint16_t _usAddress, uint16_t _usSize) {
 	uint16_t i, m;
 	uint16_t usAddr;

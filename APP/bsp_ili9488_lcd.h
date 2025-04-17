@@ -90,6 +90,17 @@
 #define LGRAYBLUE        0XA651 //浅灰蓝色(中间层颜色)
 #define LBBLUE           0X2B12 //浅棕蓝色(选择条目的反色)
 
+#define USE_HORIZONTAL 2
+
+
+#if USE_HORIZONTAL==0||USE_HORIZONTAL==1
+	#define LCD_W 80
+	#define LCD_H 160
+
+#else
+	#define LCD_W 160
+	#define LCD_H 80
+#endif
 
 typedef struct {
 	uint16_t width;			//LCD 宽度

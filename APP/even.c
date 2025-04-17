@@ -264,7 +264,7 @@ void others_handler(uevt_t* evt) {
 	static uint8_t pwm_n = 0;
 	switch(evt->evt_id) {
 		case UEVT_APP_BOOT:
-			TFTLCD_Init();			//LCD初�?�化
+			// TFTLCD_Init();			//LCD初�?�化
 
 			// LCD_ShowString(10, 30, tftlcd_data.width, tftlcd_data.height, 16, "Hello World!");
 			// LCD_ShowString(10, 50, tftlcd_data.width, tftlcd_data.height, 24, "Hello World!");
@@ -295,13 +295,13 @@ void others_handler(uevt_t* evt) {
 
 			tick_10MS++;
 
-			if(tick_10MS % 100 == 0 && beep_on_times > 0) {
-				beep_on_times--;
-				beep_on();
-			}
-			if(tick_10MS % 100 == 50) {
-				beep_off();
-			}
+			// if(tick_10MS % 100 == 0 && beep_on_times > 0) {
+			// 	beep_on_times--;
+			// 	beep_on();
+			// }
+			// if(tick_10MS % 100 == 50) {
+			// 	beep_off();
+			// }
 
 
 			break;
@@ -320,12 +320,12 @@ static void other_init(void) {
 
 void module_init(void) {
 	user_event_handler_regist(main_handler);
-	other_init();
+	// other_init();
 	// eeprom_init();
 	// display_init();
 	// dma_init();
-	spi_flash_init();
-	button_init();
+	// spi_flash_init();
+	// button_init();
 	// adc_init();
 	// pwm_init();
 	// user_event_handler_regist(test_handler);
