@@ -24,12 +24,12 @@ void quickly_gpioinit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIOSpeed_TypeDef 
 
 
 void platform_init(void) {
-	SysTick_Init(72);
+	// SysTick_Init(72);
 	// SysTick_Config(SystemCoreClock / 100); //开启内核定时器1ms
-	tim6_init(36 - 1, 100); //100us
-	tim7_init(7200 - 1, 100);//10ms
-	led_init();
-	BEEP_Init();
-	usart_Config(115200);
-	printf("app_boot\n");
+	// tim6_init(36 - 1, 100); //100us
+	// tim7_init(7200 - 1, 100);//10ms
+	// led_init();
+	// BEEP_Init();
+	// usart_Config(115200);
+	// printf("app_boot\n");
 }

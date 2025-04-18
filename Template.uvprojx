@@ -10,7 +10,7 @@
       <TargetName>Target 1</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARM_Compiler_5.06u7</pCCUsed>
+      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -555,79 +555,9 @@
               <FilePath>.\APP\assets.c</FilePath>
             </File>
             <File>
-              <FileName>bsp_beep.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\APP\bsp_beep.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_button.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\APP\bsp_button.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_dma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\APP\bsp_dma.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_i2c_ee.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\APP\bsp_i2c_ee.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_i2c_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\APP\bsp_i2c_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_ili9488_lcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\APP\bsp_ili9488_lcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_led.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\APP\bsp_led.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\APP\bsp_spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_spi_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\APP\bsp_spi_flash.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_spi_lcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\APP\bsp_spi_lcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_timer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\APP\bsp_timer.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\APP\bsp_usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_ws2812.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\APP\bsp_ws2812.c</FilePath>
-            </File>
-            <File>
               <FileName>even.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\APP\even.c</FilePath>
-            </File>
-            <File>
-              <FileName>touch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\APP\touch.c</FilePath>
             </File>
             <File>
               <FileName>lcd.c</FileName>
