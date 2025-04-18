@@ -16,45 +16,44 @@
 #endif
 
 
+// 首先在头文件中添加以下定义
+#define LCD_SPI               SPI2
+#define LCD_SPI_CLK           RCC_APB1Periph_SPI2
+#define LCD_SPI_GPIO          GPIOB
+#define LCD_SPI_GPIO_CLK      RCC_APB2Periph_GPIOB
+#define LCD_SPI_PIN_MOSI      GPIO_Pin_15
+#define LCD_SPI_PIN_SCK       GPIO_Pin_13
 
-//-----------------LCD端口定义----------------
+#define LCD_CS_PIN           GPIO_Pin_2  // PD2
+#define LCD_DC_PIN           GPIO_Pin_12  // PC12
+#define LCD_RES_PIN          GPIO_Pin_11  // PC11
+#define LCD_BLK_PIN          GPIO_Pin_10 // PC10
 
-//#define LCD_SCLK_Clr() GPIO_ResetBits(GPIOA,GPIO_Pin_0)//SCL=SCLK
-//#define LCD_SCLK_Set() GPIO_SetBits(GPIOA,GPIO_Pin_0)
-
-//#define LCD_MOSI_Clr() GPIO_ResetBits(GPIOA,GPIO_Pin_1)//SDA=MOSI
-//#define LCD_MOSI_Set() GPIO_SetBits(GPIOA,GPIO_Pin_1)
-
-//#define LCD_RES_Clr()  GPIO_ResetBits(GPIOA,GPIO_Pin_2)//RES
-//#define LCD_RES_Set()  GPIO_SetBits(GPIOA,GPIO_Pin_2)
-
-//#define LCD_DC_Clr()   GPIO_ResetBits(GPIOA,GPIO_Pin_3)//DC
-//#define LCD_DC_Set()   GPIO_SetBits(GPIOA,GPIO_Pin_3)
-//
-//#define LCD_CS_Clr()   GPIO_ResetBits(GPIOA,GPIO_Pin_4)//CS
-//#define LCD_CS_Set()   GPIO_SetBits(GPIOA,GPIO_Pin_4)
-
-//#define LCD_BLK_Clr()  GPIO_ResetBits(GPIOA,GPIO_Pin_5)//BLK
-//#define LCD_BLK_Set()  GPIO_SetBits(GPIOA,GPIO_Pin_5)
+// DMA配置
+#define LCD_DMA              DMA1
+#define LCD_DMA_CLK          RCC_AHBPeriph_DMA1
+#define LCD_DMA_TX_CHANNEL   DMA1_Channel5
+#define LCD_DMA_IRQn         DMA1_Channel5_IRQn
+#define LCD_DMA_IRQHandler   DMA1_Channel5_IRQHandler
 
 
-#define LCD_SCLK_Clr() GPIO_ResetBits(GPIOB,GPIO_Pin_8)//SCL=SCLK
-#define LCD_SCLK_Set() GPIO_SetBits(GPIOB,GPIO_Pin_8)
+#define LCD_SCLK_Clr() GPIO_ResetBits(LCD_SPI_GPIO,LCD_SPI_PIN_SCK)//SCL=SCLK
+#define LCD_SCLK_Set() GPIO_SetBits(LCD_SPI_GPIO,LCD_SPI_PIN_SCK)
 
-#define LCD_MOSI_Clr() GPIO_ResetBits(GPIOB,GPIO_Pin_9)//SDA=MOSI
-#define LCD_MOSI_Set() GPIO_SetBits(GPIOB,GPIO_Pin_9)
+#define LCD_MOSI_Clr() GPIO_ResetBits(LCD_SPI_GPIO,LCD_SPI_PIN_MOSI)//SDA=MOSI
+#define LCD_MOSI_Set() GPIO_SetBits(LCD_SPI_GPIO,LCD_SPI_PIN_MOSI)
 
-#define LCD_RES_Clr()  GPIO_ResetBits(GPIOC,GPIO_Pin_11)//RES
-#define LCD_RES_Set()  GPIO_SetBits(GPIOC,GPIO_Pin_11)
+#define LCD_RES_Clr()  GPIO_ResetBits(GPIOC,LCD_RES_PIN)//RES
+#define LCD_RES_Set()  GPIO_SetBits(GPIOC,LCD_RES_PIN)
 
-#define LCD_DC_Clr()   GPIO_ResetBits(GPIOC,GPIO_Pin_12)//DC
-#define LCD_DC_Set()   GPIO_SetBits(GPIOC,GPIO_Pin_12)
+#define LCD_DC_Clr()   GPIO_ResetBits(GPIOC,LCD_DC_PIN)//DC
+#define LCD_DC_Set()   GPIO_SetBits(GPIOC,LCD_DC_PIN)
 
-#define LCD_CS_Clr()   GPIO_ResetBits(GPIOD,GPIO_Pin_2)//CS
-#define LCD_CS_Set()   GPIO_SetBits(GPIOD,GPIO_Pin_2)
+#define LCD_CS_Clr()   GPIO_ResetBits(GPIOD,LCD_CS_PIN)//CS
+#define LCD_CS_Set()   GPIO_SetBits(GPIOD,LCD_CS_PIN)
 
-#define LCD_BLK_Clr()  GPIO_ResetBits(GPIOC,GPIO_Pin_10)//BLK
-#define LCD_BLK_Set()  GPIO_SetBits(GPIOC,GPIO_Pin_10)
+#define LCD_BLK_Clr()  GPIO_ResetBits(GPIOC,LCD_BLK_PIN)//BLK
+#define LCD_BLK_Set()  GPIO_SetBits(GPIOC,LCD_BLK_PIN)
 
 
 
