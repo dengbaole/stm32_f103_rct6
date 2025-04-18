@@ -26,8 +26,8 @@ void main_handler(uevt_t* evt) {
 			RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
 			GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);//禁
 			LCD_Fill(0, 0, LCD_W, LCD_H, WHITE);
-			LCD_BLK_Clr();//打开背光
 			LCD_ShowPicture(20, 45, 120, 29, gImage_pic1);
+			LCD_BLK_Clr();//打开背光
 			// LCD_ShowString(10,0,"Hello World!",BLACK,WHITE,16,0);
 			break;
 		case UEVT_RTC_100MS:

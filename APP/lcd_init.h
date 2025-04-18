@@ -24,6 +24,13 @@
 #define LCD_SPI_PIN_MOSI      GPIO_Pin_15
 #define LCD_SPI_PIN_SCK       GPIO_Pin_13
 
+#define LCD_SPI               SPI2
+#define LCD_SPI_CLK           RCC_APB1Periph_SPI2
+#define LCD_SPI_GPIO          GPIOB
+#define LCD_SPI_GPIO_CLK      RCC_APB2Periph_GPIOB
+#define LCD_SPI_PIN_MOSI      GPIO_Pin_15
+#define LCD_SPI_PIN_SCK       GPIO_Pin_13
+
 #define LCD_CS_PIN           GPIO_Pin_2  // PD2
 #define LCD_DC_PIN           GPIO_Pin_12  // PC12
 #define LCD_RES_PIN          GPIO_Pin_11  // PC11

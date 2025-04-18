@@ -1,46 +1,40 @@
 #include "lcd_init.h"
 
-// #define LCD_SPI               SPI2
-// #define LCD_SPI_CLK           RCC_APB1Periph_SPI2
-// #define LCD_SPI_GPIO          GPIOB
-// #define LCD_SPI_GPIO_CLK      RCC_APB2Periph_GPIOB
-// #define LCD_SPI_PIN_MOSI      GPIO_Pin_15
-// #define LCD_SPI_PIN_SCK       GPIO_Pin_13
 
-// #define LCD_CS_PIN           GPIO_Pin_2  // PD2
-// #define LCD_DC_PIN           GPIO_Pin_12  // PC12
-// #define LCD_RES_PIN          GPIO_Pin_11  // PC11
-// #define LCD_BLK_PIN          GPIO_Pin_10 // PC10
 void LCD_GPIO_Init(void) {
-	GPIO_InitTypeDef  GPIO_InitStructure;
-	// RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);	 //使能B端口时钟
-	// GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_9;
-	// GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 //推挽输出
-	// GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//速度50MHz
-	// GPIO_Init(GPIOB, &GPIO_InitStructure);	  //初始化GPIOB
-	// GPIO_SetBits(GPIOB, GPIO_Pin_8 | GPIO_Pin_9);
+	 GPIO_InitTypeDef  GPIO_InitStructure;
+    SPI_InitTypeDef   SPI_InitStructure;
 
+    // 启用GPIO时钟
+    RCC_APB2PeriphClockCmd(LCD_SPI_GPIO_CLK | RCC_APB2Periph_AFIO, ENABLE);
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC | RCC_APB2Periph_GPIOD, ENABLE);
 
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);	 //使能B端口时钟
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13 | GPIO_Pin_15;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 //推挽输出
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//速度50MHz
-	GPIO_Init(GPIOB, &GPIO_InitStructure);	  //初始化GPIOB
-	GPIO_SetBits(GPIOB, GPIO_Pin_13 | GPIO_Pin_15);
+    // 配置SPI引脚（SCK和MOSI）
+    GPIO_InitStructure.GPIO_Pin = LCD_SPI_PIN_SCK | LCD_SPI_PIN_MOSI;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;  // 复用推挽输出
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init(LCD_SPI_GPIO, &GPIO_InitStructure);
 
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);	 //使能C端口时钟
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 //推挽输出
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//速度50MHz
-	GPIO_Init(GPIOC, &GPIO_InitStructure);	  //初始化GPIOC
-	GPIO_SetBits(GPIOC, GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12);
+    // 控制引脚配置（CS、DC、RES、BLK）
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+    GPIO_Init(GPIOC, &GPIO_InitStructure);
 
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);	 //使能D端口时钟
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 //推挽输出
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//速度50MHz
-	GPIO_Init(GPIOD, &GPIO_InitStructure);	  //初始化GPIOD
-	GPIO_SetBits(GPIOD, GPIO_Pin_2);
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
+    GPIO_Init(GPIOD, &GPIO_InitStructure);
+
+    // 初始化SPI
+    RCC_APB1PeriphClockCmd(LCD_SPI_CLK, ENABLE);
+    SPI_InitStructure.SPI_Direction = SPI_Direction_1Line_Tx;
+    SPI_InitStructure.SPI_Mode = SPI_Mode_Master;
+    SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;
+    SPI_InitStructure.SPI_CPOL = SPI_CPOL_Low;       // 根据LCD规格调整
+    SPI_InitStructure.SPI_CPHA = SPI_CPHA_1Edge;     // 根据LCD规格调整
+    SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
+    SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;  // 调整时钟速度
+    SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
+    SPI_Init(LCD_SPI, &SPI_InitStructure);
+    SPI_Cmd(LCD_SPI, ENABLE);
 }
 
 
@@ -50,19 +44,11 @@ void LCD_GPIO_Init(void) {
       返回值：  无
 ******************************************************************************/
 void LCD_Writ_Bus(u8 dat) {
-	u8 i;
 	LCD_CS_Clr();
-	for(i = 0; i < 8; i++) {
-		LCD_SCLK_Clr();
-		if(dat & 0x80) {
-			LCD_MOSI_Set();
-		} else {
-			LCD_MOSI_Clr();
-		}
-		LCD_SCLK_Set();
-		dat <<= 1;
-	}
-	LCD_CS_Set();
+    while (SPI_I2S_GetFlagStatus(LCD_SPI, SPI_I2S_FLAG_TXE) == RESET); // 等待发送缓冲区空
+    SPI_I2S_SendData(LCD_SPI, dat);                                    // 发送数据
+    while (SPI_I2S_GetFlagStatus(LCD_SPI, SPI_I2S_FLAG_BSY) == SET);   // 等待发送完成
+    LCD_CS_Set();
 }
 
 
