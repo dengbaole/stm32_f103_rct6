@@ -134,13 +134,12 @@ void LCD_Address_Set(u16 x1, u16 y1, u16 x2, u16 y2) {
 void LCD_Init(void) {
 	LCD_GPIO_Init();//初始化GPIO
 	LCD_RES_Clr();//复位
-	delay_ms(100);
+	delay_ms(10);
 	LCD_RES_Set();
-	delay_ms(100);
-	LCD_BLK_Clr();//打开背光
-	delay_ms(100);
+	delay_ms(10);
+	delay_ms(10);
 	LCD_WR_REG(0x11);     //Sleep out
-	delay_ms(120);                //Delay 120ms
+	delay_ms(12);                //Delay 120ms
 	LCD_WR_REG(0xB1);     //Normal mode
 	LCD_WR_DATA8(0x05);
 	LCD_WR_DATA8(0x3C);
@@ -232,7 +231,6 @@ void LCD_Init(void) {
 	LCD_WR_DATA8(0xA0);    //160
 	LCD_WR_REG(0x2C);
 
-	LCD_Fill(0, 0, LCD_W, LCD_H, WHITE);	//初始化成白屏
 }
 
 
