@@ -28,7 +28,7 @@ void main_handler(uevt_t* evt) {
 			LCD_Fill(0, 0, LCD_W, LCD_H, WHITE);
 			LCD_ShowPicture(20, 45, 120, 29, gImage_pic1);
 			LCD_BL_ON();//打开背光
-			// LCD_ShowString(10,0,"Hello World!",BLACK,WHITE,16,0);
+			LCD_ShowString(10,0,"stm32f103_rct6!",BLACK,WHITE,16,0);
 			break;
 		case UEVT_RTC_100MS:
 			if(started) {
