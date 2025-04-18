@@ -59,8 +59,8 @@
 #define LCD_CS_Clr()   GPIO_ResetBits(GPIOD,LCD_CS_PIN)//CS
 #define LCD_CS_Set()   GPIO_SetBits(GPIOD,LCD_CS_PIN)
 
-#define LCD_BLK_Clr()  GPIO_ResetBits(GPIOC,LCD_BLK_PIN)//BLK
-#define LCD_BLK_Set()  GPIO_SetBits(GPIOC,LCD_BLK_PIN)
+#define LCD_BL_ON()  GPIO_ResetBits(GPIOC,LCD_BLK_PIN)//BLK
+#define LCD_BL_OFF()  GPIO_SetBits(GPIOC,LCD_BLK_PIN)
 
 
 
