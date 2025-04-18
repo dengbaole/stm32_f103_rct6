@@ -240,7 +240,6 @@ void LCD_Init(void) {
 	LCD_WR_DATA8(0x00);
 	LCD_WR_DATA8(0xA0);    //160
 	LCD_WR_REG(0x2C);
-
 }
 
 
