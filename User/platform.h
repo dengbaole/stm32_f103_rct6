@@ -9,6 +9,7 @@
 
 #include "uevent.h"
 #include "even.h"
+#include "lcd_init.h"
 //#include "bsp_led.h"
 //#include "bsp_button.h"
 //#include "bsp_usart.h"
@@ -18,7 +19,7 @@
 //#include "bsp_i2c_gpio.h"
 //#include "bsp_ws2812.h"
 //#include "bsp_dma.h"
-//#include "SysTick.h"
+#include "SysTick.h"
 //#include "bitmap.h"
 //#include "bsp_spi.h"
 //#include "stm32f10x.h"

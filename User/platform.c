@@ -24,7 +24,9 @@ void quickly_gpioinit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIOSpeed_TypeDef 
 
 
 void platform_init(void) {
-	// SysTick_Init(72);
+	SystemInit();
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+	SysTick_Init(72);
 	// SysTick_Config(SystemCoreClock / 100); //开启内核定时器1ms
 	// tim6_init(36 - 1, 100); //100us
 	// tim7_init(7200 - 1, 100);//10ms

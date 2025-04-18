@@ -4,7 +4,7 @@
 #include "stdio.h"
 #include "platform.h"
 
-
+#include "pic.h"
 
 //处理打印测试
 void main_handler(uevt_t* evt) {
@@ -22,7 +22,12 @@ void main_handler(uevt_t* evt) {
 			// LCD_ShowString(10, 50, tftlcd_data.width, tftlcd_data.height, 24, "Hello World!");
 			// LCD_ShowFontHZ(10, 80, "普中科技");
 			// LCD_ShowString(10, 120, tftlcd_data.width, tftlcd_data.height, 24, "www.prechin.cn");
-
+			LCD_Init();//LCD初始化
+			RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
+			GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);//禁
+			LCD_Fill(0, 0, LCD_W, LCD_H, WHITE);
+			LCD_ShowPicture(20, 45, 120, 29, gImage_pic1);
+			// LCD_ShowString(10,0,"Hello World!",BLACK,WHITE,16,0);
 			break;
 		case UEVT_RTC_100MS:
 			if(started) {

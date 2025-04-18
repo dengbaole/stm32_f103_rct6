@@ -5,10 +5,10 @@
 
 
 
-//¹¦ÄÜ¿ª¹Ø  1:´ò¿ª 0:¹Ø±Õ
+//ï¿½ï¿½ï¿½Ü¿ï¿½ï¿½ï¿½  1:ï¿½ï¿½ 0:ï¿½Ø±ï¿½
 #define LCD_SWITCH    1
-#define IMU_SWITCH 		0 
-#define FLASH_SWITCH  0 
+#define IMU_SWITCH 		0
+#define FLASH_SWITCH  0
 #define RGB_SWITCH		1
 
 #define DEBUG_SWITCH  1
@@ -19,6 +19,7 @@
 
 #include "stdint.h"
 #include "stm32f10x.h"
+#include "SysTick.h"
 //#include "stm32f10x_gpio.h"
 //#include "stm32f10x_pwr.h"
 //#include "stm32f10x_bkp.h"
@@ -41,13 +42,13 @@
 //#include "bsp_RGB.h"
 //#include "bsp_usart.h"
 
-//APPÎÄ¼þÏÂµÄº¯Êý
-/********Íâ²¿flashÏà¹Ø*********/
+//APPï¿½Ä¼ï¿½ï¿½ÂµÄºï¿½ï¿½ï¿½
+/********ï¿½â²¿flashï¿½ï¿½ï¿½*********/
 u8 detcet_flash(void);
 void flash_test(void);
 void show_flash(void);
 
-/**********IMUÏà¹Ø************/
+/**********IMUï¿½ï¿½ï¿½************/
 void imu_test(void);
 
 extern unsigned char ICM_ADDRESS;
