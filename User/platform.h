@@ -20,11 +20,11 @@
 //#include "bsp_ws2812.h"
 //#include "bsp_dma.h"
 #include "SysTick.h"
-//#include "bitmap.h"
+#include "bitmap.h"
 //#include "bsp_spi.h"
 //#include "stm32f10x.h"
 //#include "bsp_timer.h"
-//#include "assets.h"
+#include "assets.h"
 //#include "bsp_ili9488_lcd.h"
 
 #define ON  1

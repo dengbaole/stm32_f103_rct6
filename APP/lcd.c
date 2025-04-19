@@ -340,3 +340,15 @@ void LCD_ShowPicture(u16 x, u16 y, u16 length, u16 width, const u8 pic[]) {
 }
 
 
+void LCD_ShowPicture2(u16 x, u16 y, const sBITMAP* pic) {
+	u16 i, j;
+	u32 k = 0;
+	LCD_Address_Set(x, y, x + pic->w - 1, y + pic->h - 1);
+	for(i = 0; i < pic->h; i++) {
+		for(j = 0; j < pic->w; j++) {
+			LCD_WR_DATA8(pic->map[k * 2]);
+			LCD_WR_DATA8(pic->map[k * 2 +1]);
+			k++;
+		}
+	}
+}

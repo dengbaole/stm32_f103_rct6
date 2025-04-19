@@ -13,7 +13,7 @@ void main_handler(uevt_t* evt) {
 	static bool started = false;
 	static uint32_t tick_1MS = 0;
 	static uint32_t tick_10MS = 0;
-	static uint8_t pwm_n = 0;
+	static uint8_t h = 0;
 	switch(evt->evt_id) {
 		case UEVT_APP_BOOT:
 			// TFTLCD_Init();			//LCD初�?�化
@@ -25,15 +25,20 @@ void main_handler(uevt_t* evt) {
 			LCD_Init();//LCD初始化
 			RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
 			GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);//禁
-			LCD_Fill(0, 0, LCD_W, LCD_H, WHITE);
-			LCD_ShowPicture(20, 45, 120, 29, gImage_pic1);
+			LCD_Fill(0, 0, LCD_W, LCD_H, BLACK);
+			// LCD_ShowPicture(20, 45, 120, 29, gImage_pic1);
+		   LCD_ShowPicture2(h, 45,  &fonts_10_12_num_01_bmp);
+			// LCD_ShowString(10,0,"stm32f103_rct6!",WHITE,BLACK,16,0);
 			LCD_BL_ON();//打开背光
-			LCD_ShowString(10,0,"stm32f103_rct6!",BLACK,WHITE,16,0);
 			break;
 		case UEVT_RTC_100MS:
 			if(started) {
 				//LOG_HEAD("[%08d]:\n", tick++);
 			}
+			h++;
+			LCD_Fill(0, 0, LCD_W, LCD_H, BLACK);
+			// LCD_ShowPicture(20, 45, 120, 29, gImage_pic1);
+		   LCD_ShowPicture2(h%20, 45,  &fonts_10_12_num_01_bmp);
 			// if(pwm_n <200){
 			// 	pwm_n++;
 			// }else{
