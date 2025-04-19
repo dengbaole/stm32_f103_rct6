@@ -27,7 +27,7 @@ void main_handler(uevt_t* evt) {
 			GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);//禁
 			LCD_Fill(0, 0, LCD_W, LCD_H, BLACK);
 			// LCD_ShowPicture(20, 45, 120, 29, gImage_pic1);
-		   LCD_ShowPicture2(h, 45,  &fonts_10_12_num_01_bmp);
+		   LCD_ShowPicture2(0, 0,  &boot_00012_bmp);
 			// LCD_ShowString(10,0,"stm32f103_rct6!",WHITE,BLACK,16,0);
 			LCD_BL_ON();//打开背光
 			break;
@@ -36,9 +36,9 @@ void main_handler(uevt_t* evt) {
 				//LOG_HEAD("[%08d]:\n", tick++);
 			}
 			h++;
-			LCD_Fill(0, 0, LCD_W, LCD_H, BLACK);
+			// LCD_Fill(0, 0, LCD_W, LCD_H, BLACK);
 			// LCD_ShowPicture(20, 45, 120, 29, gImage_pic1);
-		   LCD_ShowPicture2(h%20, 45,  &fonts_10_12_num_01_bmp);
+		//    LCD_ShowPicture2(h%20, 45,  &boot_00000_bmp);
 			// if(pwm_n <200){
 			// 	pwm_n++;
 			// }else{
