@@ -24,6 +24,7 @@
 //#include "bsp_spi.h"
 //#include "stm32f10x.h"
 #include "bsp_timer.h"
+#include "led_drv.h"
 #include "assets.h"
 //#include "bsp_ili9488_lcd.h"
 

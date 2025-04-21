@@ -347,7 +347,7 @@ void LCD_ShowPicture2(u16 x, u16 y, const sBITMAP* pic) {
 	for(i = 0; i < pic->h; i++) {
 		for(j = 0; j < pic->w; j++) {
 			LCD_WR_DATA8(pic->map[k * 2]);
-			LCD_WR_DATA8(pic->map[k * 2 +1]);
+			LCD_WR_DATA8(pic->map[k * 2 + 1]);
 			k++;
 		}
 	}

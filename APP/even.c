@@ -17,11 +17,12 @@ void main_handler(uevt_t* evt) {
 	switch(evt->evt_id) {
 		case UEVT_APP_BOOT:
 			LCD_Init();//LCD初始化
+			led_init();//LED初始化
 			RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
 			GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);//禁
 			LCD_Fill(0, 0, LCD_W, LCD_H, BLACK);
 			// LCD_ShowPicture(20, 45, 120, 29, gImage_pic1);
-		   LCD_ShowPicture2(0, 0,  &boot_00015_bmp);
+			LCD_ShowPicture2(0, 0,  &boot_00015_bmp);
 			// LCD_ShowString(10,0,"stm32f103_rct6!",WHITE,BLACK,16,0);
 			LCD_BL_ON();//打开背光
 			break;
@@ -30,13 +31,13 @@ void main_handler(uevt_t* evt) {
 				//LOG_HEAD("[%08d]:\n", tick++);
 			}
 			h++;
-			if(h%10 == 0) {
-			// LCD_ShowPicture2(0, 0,  &boot_00025_bmp);
-				LCD_ShowPicture2(0, 0,  fonts_10_12_num_array[h/10%10]);
+			if(h % 10 == 0) {
+				// LCD_ShowPicture2(0, 0,  &boot_00025_bmp);
+				LCD_ShowPicture2(0, 0,  fonts_10_12_num_array[h / 10 % 10]);
 			}
 			// LCD_Fill(0, 0, LCD_W, LCD_H, BLACK);
 			// LCD_ShowPicture(20, 45, 120, 29, gImage_pic1);
-		//    LCD_ShowPicture2(h%20, 45,  &boot_00000_bmp);
+			//    LCD_ShowPicture2(h%20, 45,  &boot_00000_bmp);
 			// if(pwm_n <200){
 			// 	pwm_n++;
 			// }else{

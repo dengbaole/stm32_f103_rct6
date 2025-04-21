@@ -105,25 +105,25 @@ void TIM6_IRQHandler(void) {
 	if(TIM_GetITStatus(TIM6, TIM_IT_Update)) {
 		TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
 		// todo 定时器100us
-//		if(t_100us == 0) {
-//			if(g_sort_pwm > 0) {
-//				LED_G(ON);
-//			}
-//			if(r_sort_pwm > 0) {
-//				LED_R(ON);
-//			}
-//		}
-//		if(t_100us >= g_sort_pwm) {
-//			LED_G(OFF);
-//		}
-//		if(t_100us >= r_sort_pwm) {
-//			LED_R(OFF);
-//		}
-//		t_100us++;
-//		if(t_100us >= 100) {
+		//		if(t_100us == 0) {
+		//			if(g_sort_pwm > 0) {
+		//				LEDG(ON);
+		//			}
+		//			if(r_sort_pwm > 0) {
+		//				LED_R(ON);
+		//			}
+		//		}
+		//		if(t_100us >= g_sort_pwm) {
+		//			LEDG(OFF);
+		//		}
+		//		if(t_100us >= r_sort_pwm) {
+		//			LED_R(OFF);
+		//		}
+		//		t_100us++;
+		//		if(t_100us >= 100) {
 
-//			t_100us = 0;
-//		}
+		//			t_100us = 0;
+		//		}
 
 	}
 }

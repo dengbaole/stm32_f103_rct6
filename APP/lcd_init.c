@@ -2,40 +2,36 @@
 
 
 void LCD_GPIO_Init(void) {
-	 GPIO_InitTypeDef  GPIO_InitStructure;
-    SPI_InitTypeDef   SPI_InitStructure;
+	GPIO_InitTypeDef  GPIO_InitStructure;
+	SPI_InitTypeDef   SPI_InitStructure;
 
-    // ����GPIOʱ��
-    RCC_APB2PeriphClockCmd(LCD_SPI_GPIO_CLK | RCC_APB2Periph_AFIO, ENABLE);
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC | RCC_APB2Periph_GPIOD, ENABLE);
+	RCC_APB2PeriphClockCmd(LCD_SPI_GPIO_CLK | RCC_APB2Periph_AFIO, ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC | RCC_APB2Periph_GPIOD, ENABLE);
 
-    // ����SPI���ţ�SCK��MOSI��
-    GPIO_InitStructure.GPIO_Pin = LCD_SPI_PIN_SCK | LCD_SPI_PIN_MOSI;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;  // �����������
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-    GPIO_Init(LCD_SPI_GPIO, &GPIO_InitStructure);
+	GPIO_InitStructure.GPIO_Pin = LCD_SPI_PIN_SCK | LCD_SPI_PIN_MOSI;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(LCD_SPI_GPIO, &GPIO_InitStructure);
 
-    // �����������ã�CS��DC��RES��BLK��
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-    GPIO_Init(GPIOC, &GPIO_InitStructure);
-    LCD_BL_OFF();
+	GPIO_InitStructure.GPIO_Pin = LCD_BLK_PIN | LCD_RES_PIN | LCD_DC_PIN;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+	GPIO_Init(GPIOC, &GPIO_InitStructure);
+	LCD_BL_OFF();
 
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
-    GPIO_Init(GPIOD, &GPIO_InitStructure);
+	GPIO_InitStructure.GPIO_Pin = LCD_CS_PIN;
+	GPIO_Init(GPIOD, &GPIO_InitStructure);
 
-    // ��ʼ��SPI
-    RCC_APB1PeriphClockCmd(LCD_SPI_CLK, ENABLE);
-    SPI_InitStructure.SPI_Direction = SPI_Direction_1Line_Tx;
-    SPI_InitStructure.SPI_Mode = SPI_Mode_Master;
-    SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;
-    SPI_InitStructure.SPI_CPOL = SPI_CPOL_Low;       // ����LCD������
-    SPI_InitStructure.SPI_CPHA = SPI_CPHA_1Edge;     // ����LCD������
-    SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
-    SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;  // ����ʱ���ٶ�
-    SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
-    SPI_Init(LCD_SPI, &SPI_InitStructure);
-    SPI_Cmd(LCD_SPI, ENABLE);
+	RCC_APB1PeriphClockCmd(LCD_SPI_CLK, ENABLE);
+	SPI_InitStructure.SPI_Direction = SPI_Direction_1Line_Tx;
+	SPI_InitStructure.SPI_Mode = SPI_Mode_Master;
+	SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;
+	SPI_InitStructure.SPI_CPOL = SPI_CPOL_Low;       //  根据LCD规格调整
+	SPI_InitStructure.SPI_CPHA = SPI_CPHA_1Edge;     //  根据LCD规格调整
+	SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
+	SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;  // ����ʱ���ٶ�
+	SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
+	SPI_Init(LCD_SPI, &SPI_InitStructure);
+	SPI_Cmd(LCD_SPI, ENABLE);
 }
 
 
@@ -46,10 +42,10 @@ void LCD_GPIO_Init(void) {
 ******************************************************************************/
 void LCD_Writ_Bus(u8 dat) {
 	LCD_CS_Clr();
-    while (SPI_I2S_GetFlagStatus(LCD_SPI, SPI_I2S_FLAG_TXE) == RESET); // �ȴ����ͻ�������
-    SPI_I2S_SendData(LCD_SPI, dat);                                    // ��������
-    while (SPI_I2S_GetFlagStatus(LCD_SPI, SPI_I2S_FLAG_BSY) == SET);   // �ȴ��������
-    LCD_CS_Set();
+	while (SPI_I2S_GetFlagStatus(LCD_SPI, SPI_I2S_FLAG_TXE) == RESET); // �ȴ����ͻ�������
+	SPI_I2S_SendData(LCD_SPI, dat);                                    // ��������
+	while (SPI_I2S_GetFlagStatus(LCD_SPI, SPI_I2S_FLAG_BSY) == SET);   // �ȴ��������
+	LCD_CS_Set();
 }
 
 
