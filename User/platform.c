@@ -28,8 +28,8 @@ void platform_init(void) {
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 	SysTick_Init(72);
 	// SysTick_Config(SystemCoreClock / 100); //开启内核定时器1ms
-	// tim6_init(36 - 1, 100); //100us
-	// tim7_init(7200 - 1, 100);//10ms
+	tim6_init(36 - 1, 100); //100us
+	tim7_init(7200 - 1, 100);//10ms
 	// led_init();
 	// BEEP_Init();
 	// usart_Config(115200);

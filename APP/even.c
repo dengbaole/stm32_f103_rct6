@@ -16,18 +16,12 @@ void main_handler(uevt_t* evt) {
 	static uint8_t h = 0;
 	switch(evt->evt_id) {
 		case UEVT_APP_BOOT:
-			// TFTLCD_Init();			//LCD初�?�化
-
-			// LCD_ShowString(10, 30, tftlcd_data.width, tftlcd_data.height, 16, "Hello World!");
-			// LCD_ShowString(10, 50, tftlcd_data.width, tftlcd_data.height, 24, "Hello World!");
-			// LCD_ShowFontHZ(10, 80, "普中科技");
-			// LCD_ShowString(10, 120, tftlcd_data.width, tftlcd_data.height, 24, "www.prechin.cn");
 			LCD_Init();//LCD初始化
 			RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
 			GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);//禁
 			LCD_Fill(0, 0, LCD_W, LCD_H, BLACK);
 			// LCD_ShowPicture(20, 45, 120, 29, gImage_pic1);
-		   LCD_ShowPicture2(0, 0,  &boot_00012_bmp);
+		   LCD_ShowPicture2(0, 0,  &boot_00015_bmp);
 			// LCD_ShowString(10,0,"stm32f103_rct6!",WHITE,BLACK,16,0);
 			LCD_BL_ON();//打开背光
 			break;
@@ -36,6 +30,10 @@ void main_handler(uevt_t* evt) {
 				//LOG_HEAD("[%08d]:\n", tick++);
 			}
 			h++;
+			if(h%10 == 0) {
+			// LCD_ShowPicture2(0, 0,  &boot_00025_bmp);
+				LCD_ShowPicture2(0, 0,  fonts_10_12_num_array[h/10%10]);
+			}
 			// LCD_Fill(0, 0, LCD_W, LCD_H, BLACK);
 			// LCD_ShowPicture(20, 45, 120, 29, gImage_pic1);
 		//    LCD_ShowPicture2(h%20, 45,  &boot_00000_bmp);
