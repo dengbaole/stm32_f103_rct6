@@ -2,6 +2,7 @@
 #define __LCD_INIT_H
 
 #include "AllHeader.h"
+#include "bitmap.h"
 
 #define USE_HORIZONTAL 1  //设置横屏或者竖屏显示 0或1为竖屏 2或3为横屏
 
@@ -71,6 +72,8 @@ void LCD_WR_DATA(u16 dat);//写入两个字节
 void LCD_WR_REG(u8 dat);//写入一个指令
 void LCD_Address_Set(u16 x1, u16 y1, u16 x2, u16 y2); //设置坐标函数
 void LCD_Init(void);//LCD初始化
+void lcd_clear(u16 xsta, u16 ysta, u16 xend, u16 yend, u16 color); 
+void LCD_ShowPicture2(u16 x, u16 y, const sBITMAP* pic);
 #endif
 
 

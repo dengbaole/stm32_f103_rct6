@@ -4,7 +4,8 @@
 void LCD_GPIO_Init(void) {
 	GPIO_InitTypeDef  GPIO_InitStructure;
 	SPI_InitTypeDef   SPI_InitStructure;
-
+	
+	RCC_APB1PeriphClockCmd(LCD_SPI_CLK, ENABLE);
 	RCC_APB2PeriphClockCmd(LCD_SPI_GPIO_CLK | RCC_APB2Periph_AFIO, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC | RCC_APB2Periph_GPIOD, ENABLE);
 
@@ -21,14 +22,14 @@ void LCD_GPIO_Init(void) {
 	GPIO_InitStructure.GPIO_Pin = LCD_CS_PIN;
 	GPIO_Init(GPIOD, &GPIO_InitStructure);
 
-	RCC_APB1PeriphClockCmd(LCD_SPI_CLK, ENABLE);
+	
 	SPI_InitStructure.SPI_Direction = SPI_Direction_1Line_Tx;
 	SPI_InitStructure.SPI_Mode = SPI_Mode_Master;
 	SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;
 	SPI_InitStructure.SPI_CPOL = SPI_CPOL_Low;       //  根据LCD规格调整
 	SPI_InitStructure.SPI_CPHA = SPI_CPHA_1Edge;     //  根据LCD规格调整
 	SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
-	SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;  // ����ʱ���ٶ�
+	SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_4;  // ����ʱ���ٶ�
 	SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
 	SPI_Init(LCD_SPI, &SPI_InitStructure);
 	SPI_Cmd(LCD_SPI, ENABLE);
@@ -227,7 +228,29 @@ void LCD_Init(void) {
 
 
 
+void lcd_clear(u16 xsta, u16 ysta, u16 xend, u16 yend, u16 color) {
+	u16 i, j;
+	LCD_Address_Set(xsta, ysta, xend - 1, yend - 1); //设置显示范围
+	for(i = ysta; i < yend; i++) {
+		for(j = xsta; j < xend; j++) {
+			LCD_WR_DATA(color);
+		}
+	}
+}
 
+
+void LCD_ShowPicture2(u16 x, u16 y, const sBITMAP* pic) {
+	u16 i, j;
+	u32 k = 0;
+	LCD_Address_Set(x, y, x + pic->w - 1, y + pic->h - 1);
+	for(i = 0; i < pic->h; i++) {
+		for(j = 0; j < pic->w; j++) {
+			LCD_WR_DATA8(pic->map[k * 2]);
+			LCD_WR_DATA8(pic->map[k * 2 + 1]);
+			k++;
+		}
+	}
+}
 
 
 

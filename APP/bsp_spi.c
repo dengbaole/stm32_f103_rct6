@@ -11,26 +11,22 @@ void SPI_FLASH_Init(void) {
 
 	/* 使能SPI时钟 */
 	RCC_APB1PeriphClockCmd ( FLASH_SPI_CLK, ENABLE );
-
-	/* 使能SPI引脚相关的时钟 */
 	RCC_APB2PeriphClockCmd (FLASH_SPI_GPIO, ENABLE );
 
-	/* 配置SPI的 CS引脚，普通IO即可 */
+
+  //flash引脚配置
 	GPIO_InitStructure.GPIO_Pin = FLASH_SPI_CS_PIN;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
 	GPIO_Init(FLASH_SPI_CS_PORT, &GPIO_InitStructure);
 
-	/* 配置SPI的 SCK引脚*/
 	GPIO_InitStructure.GPIO_Pin = FLASH_SPI_SCK_PIN;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
 	GPIO_Init(FLASH_SPI_SCK_PORT, &GPIO_InitStructure);
 
-	/* 配置SPI的 MISO引脚*/
 	GPIO_InitStructure.GPIO_Pin = FLASH_SPI_MISO_PIN;
 	GPIO_Init(FLASH_SPI_MISO_PORT, &GPIO_InitStructure);
 
-	/* 配置SPI的 MOSI引脚*/
 	GPIO_InitStructure.GPIO_Pin = FLASH_SPI_MOSI_PIN;
 	GPIO_Init(FLASH_SPI_MOSI_PORT, &GPIO_InitStructure);
 
