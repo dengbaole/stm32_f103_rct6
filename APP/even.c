@@ -16,7 +16,7 @@ void main_handler(uevt_t* evt) {
 	static uint8_t h = 0;
 	switch(evt->evt_id) {
 		case UEVT_APP_BOOT:
-			LCD_Init();//LCD初始化
+			lcd_init();//LCD初始化
 			led_init();//LED初始化
 			RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
 			GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);//禁
@@ -274,7 +274,7 @@ void others_handler(uevt_t* evt) {
 	static uint8_t pwm_n = 0;
 	switch(evt->evt_id) {
 		case UEVT_APP_BOOT:
-			// TFTLCD_Init();			//LCD初�?�化
+			// TFTlcd_init();			//LCD初�?�化
 
 			// LCD_ShowString(10, 30, tftlcd_data.width, tftlcd_data.height, 16, "Hello World!");
 			// LCD_ShowString(10, 50, tftlcd_data.width, tftlcd_data.height, 24, "Hello World!");

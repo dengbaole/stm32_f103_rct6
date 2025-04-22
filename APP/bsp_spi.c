@@ -1,16 +1,12 @@
 #include "bsp_spi.h"
 
-/**
-  * @brief  SPI_FLASH初始化
-  * @param  无
-  * @retval 无
-  */
-void SPI_FLASH_Init(void) {
+
+void spi2_init(void) {
 	SPI_InitTypeDef  SPI_InitStructure;
 	GPIO_InitTypeDef GPIO_InitStructure;
 
 	/* 使能SPI时钟 */
-	RCC_APB1PeriphClockCmd ( FLASH_SPI_CLK, ENABLE );
+	RCC_APB1PeriphClockCmd (FLASH_SPI_CLK, ENABLE );
 	RCC_APB2PeriphClockCmd (FLASH_SPI_GPIO, ENABLE );
 
 

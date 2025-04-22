@@ -88,13 +88,13 @@
 
 
 
-void LCD_GPIO_Init(void);//初始化GPIO
+void lcd_gpio_init(void);//初始化GPIO
 void LCD_Writ_Bus(u8 dat);//模拟SPI时序
 void LCD_WR_DATA8(u8 dat);//写入一个字节
 void LCD_WR_DATA(u16 dat);//写入两个字节
 void LCD_WR_REG(u8 dat);//写入一个指令
 void LCD_Address_Set(u16 x1, u16 y1, u16 x2, u16 y2); //设置坐标函数
-void LCD_Init(void);//LCD初始化
+void lcd_init(void);//LCD初始化
 void lcd_clear(u16 xsta, u16 ysta, u16 xend, u16 yend, u16 color);
 void LCD_ShowPicture2(u16 x, u16 y, const sBITMAP* pic);
 #endif

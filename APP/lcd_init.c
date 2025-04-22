@@ -1,7 +1,7 @@
 #include "lcd_init.h"
 
 
-void LCD_GPIO_Init(void) {
+void lcd_gpio_init(void) {
 	GPIO_InitTypeDef  GPIO_InitStructure;
 	SPI_InitTypeDef   SPI_InitStructure;
 
@@ -34,6 +34,7 @@ void LCD_GPIO_Init(void) {
 	SPI_Init(LCD_SPI, &SPI_InitStructure);
 	SPI_Cmd(LCD_SPI, ENABLE);
 }
+
 
 
 
@@ -104,8 +105,8 @@ void LCD_Address_Set(u16 x1, u16 y1, u16 x2, u16 y2) {
 	}
 }
 
-void LCD_Init(void) {
-	LCD_GPIO_Init();//��ʼ��GPIO
+void lcd_init(void) {
+	lcd_gpio_init();//��ʼ��GPIO
 	LCD_RES_Clr();//��λ
 	delay_ms(10);
 	LCD_RES_Set();

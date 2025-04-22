@@ -23,7 +23,7 @@
 #define SPI_FLASH_CS_HIGH() GPIO_SetBits(GPIOB,FLASH_SPI_CS_PIN);
 #define SPI_FLASH_CS_LOW()  GPIO_ResetBits(GPIOB,FLASH_SPI_CS_PIN);
 
-void SPI_FLASH_Init(void);
+void spi2_init(void);
 u8 SPI_ReadWriteByte(u8 TxData);
 void SPI1_SetSpeed(u8 SpeedSet);
 
