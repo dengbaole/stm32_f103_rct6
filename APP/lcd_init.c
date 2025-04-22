@@ -4,7 +4,7 @@
 void LCD_GPIO_Init(void) {
 	GPIO_InitTypeDef  GPIO_InitStructure;
 	SPI_InitTypeDef   SPI_InitStructure;
-	
+
 	RCC_APB1PeriphClockCmd(LCD_SPI_CLK, ENABLE);
 	RCC_APB2PeriphClockCmd(LCD_SPI_GPIO_CLK | RCC_APB2Periph_AFIO, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC | RCC_APB2Periph_GPIOD, ENABLE);
@@ -22,7 +22,7 @@ void LCD_GPIO_Init(void) {
 	GPIO_InitStructure.GPIO_Pin = LCD_CS_PIN;
 	GPIO_Init(GPIOD, &GPIO_InitStructure);
 
-	
+
 	SPI_InitStructure.SPI_Direction = SPI_Direction_1Line_Tx;
 	SPI_InitStructure.SPI_Mode = SPI_Mode_Master;
 	SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;
@@ -36,11 +36,7 @@ void LCD_GPIO_Init(void) {
 }
 
 
-/******************************************************************************
-      ����˵����LCD��������д�뺯��
-      ������ݣ�dat  Ҫд��Ĵ�������
-      ����ֵ��  ��
-******************************************************************************/
+
 void LCD_Writ_Bus(u8 dat) {
 	LCD_CS_Clr();
 	while (SPI_I2S_GetFlagStatus(LCD_SPI, SPI_I2S_FLAG_TXE) == RESET); // �ȴ����ͻ�������
@@ -50,32 +46,20 @@ void LCD_Writ_Bus(u8 dat) {
 }
 
 
-/******************************************************************************
-      ����˵����LCDд������
-      ������ݣ�dat д�������
-      ����ֵ��  ��
-******************************************************************************/
+
 void LCD_WR_DATA8(u8 dat) {
 	LCD_Writ_Bus(dat);
 }
 
 
-/******************************************************************************
-      ����˵����LCDд������
-      ������ݣ�dat д�������
-      ����ֵ��  ��
-******************************************************************************/
+
 void LCD_WR_DATA(u16 dat) {
 	LCD_Writ_Bus(dat >> 8);
 	LCD_Writ_Bus(dat);
 }
 
 
-/******************************************************************************
-      ����˵����LCDд������
-      ������ݣ�dat д�������
-      ����ֵ��  ��
-******************************************************************************/
+
 void LCD_WR_REG(u8 dat) {
 	LCD_DC_Clr();//д����
 	LCD_Writ_Bus(dat);
@@ -83,12 +67,7 @@ void LCD_WR_REG(u8 dat) {
 }
 
 
-/******************************************************************************
-      ����˵����������ʼ�ͽ�����ַ
-      ������ݣ�x1,x2 �����е���ʼ�ͽ�����ַ
-                y1,y2 �����е���ʼ�ͽ�����ַ
-      ����ֵ��  ��
-******************************************************************************/
+
 void LCD_Address_Set(u16 x1, u16 y1, u16 x2, u16 y2) {
 	if(USE_HORIZONTAL == 0) {
 		LCD_WR_REG(0x2a);//�е�ַ����
@@ -207,10 +186,15 @@ void LCD_Init(void) {
 	LCD_WR_REG(0x3A);
 	LCD_WR_DATA8(0x05);
 	LCD_WR_REG(0x36);
-	if(USE_HORIZONTAL == 0)LCD_WR_DATA8(0x08);
-	else if(USE_HORIZONTAL == 1)LCD_WR_DATA8(0xC8);
-	else if(USE_HORIZONTAL == 2)LCD_WR_DATA8(0x78);
-	else LCD_WR_DATA8(0xA8);
+	if(USE_HORIZONTAL == 0) {
+		LCD_WR_DATA8(0x08);
+	} else if(USE_HORIZONTAL == 1) {
+		LCD_WR_DATA8(0xC8);
+	} else if(USE_HORIZONTAL == 2)	{
+		LCD_WR_DATA8(0x78);
+	} else {
+		LCD_WR_DATA8(0xA8);
+	}
 	LCD_WR_REG(0x21);     //Display inversion
 	LCD_WR_REG(0x29);     //Display on
 	LCD_WR_REG(0x2A);     //Set Column Address

@@ -14,9 +14,9 @@ void SPI_FLASH_Init(void) {
 	RCC_APB2PeriphClockCmd (FLASH_SPI_GPIO, ENABLE );
 
 
-  //flash“˝Ω≈≈‰÷√
-	GPIO_InitStructure.GPIO_Pin = FLASH_SPI_CS_PIN;
+	//flash“˝Ω≈≈‰÷√
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_InitStructure.GPIO_Pin = FLASH_SPI_CS_PIN;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
 	GPIO_Init(FLASH_SPI_CS_PORT, &GPIO_InitStructure);
 
