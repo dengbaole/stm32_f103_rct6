@@ -33,7 +33,7 @@
 //#include "bsp_icm20607.h"
 //#include "IOI2C.h"
 
-#include "lcd.h"
+
 #include "lcd_init.h"
 
 //#include "bsp_spi.h"

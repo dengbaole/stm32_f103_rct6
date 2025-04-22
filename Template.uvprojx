@@ -560,11 +560,6 @@
               <FilePath>.\APP\even.c</FilePath>
             </File>
             <File>
-              <FileName>lcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\APP\lcd.c</FilePath>
-            </File>
-            <File>
               <FileName>lcd_init.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\APP\lcd_init.c</FilePath>
