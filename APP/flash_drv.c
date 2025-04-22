@@ -1,6 +1,6 @@
-#include "led_drv.h"
+#include "flash_drv.h"
 
-void led_init(void) {
+void flash_init(void) {
 	GPIO_InitTypeDef  GPIO_InitStructure;
 	GPIO_InitStructure.GPIO_Pin = LEDB_PIN | LEDR_PIN | LEDG_PIN;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
