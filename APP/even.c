@@ -21,8 +21,6 @@ void main_handler(uevt_t* evt) {
 			spi2_init();
 			lcd_init();//LCD初始化
 			led_init();//LED初始化
-			RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
-			GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);//禁
 			lcd_clear(0, 0, LCD_W, LCD_H, BLACK);
 			// LCD_ShowPicture(20, 45, 120, 29, gImage_pic1);
 			LCD_ShowPicture2(0, 0,  &boot_00015_bmp);

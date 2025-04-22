@@ -1,10 +1,5 @@
 #include "bsp_spi.h"
 
-
-
-
-
-
 void spi2_init(void) {
 	SPI_InitTypeDef  SPI_InitStructure;
 	GPIO_InitTypeDef GPIO_InitStructure;
@@ -26,12 +21,6 @@ void spi2_init(void) {
 }
 
 
-//SPI �ٶ����ú���
-//SpeedSet:
-//SPI_BaudRatePrescaler_2   2��Ƶ   (SPI 36M@sys 72M)
-//SPI_BaudRatePrescaler_8   8��Ƶ   (SPI 9M@sys 72M)
-//SPI_BaudRatePrescaler_16  16��Ƶ  (SPI 4.5M@sys 72M)
-//SPI_BaudRatePrescaler_256 256��Ƶ (SPI 281.25K@sys 72M)
 
 void SPI1_SetSpeed(u8 SpeedSet) {
 	SPI_InitTypeDef SPI_InitStructure;
@@ -41,9 +30,6 @@ void SPI1_SetSpeed(u8 SpeedSet) {
 }
 
 
-//SPIx ��дһ���ֽ�
-//TxData:Ҫд����ֽ�
-//����ֵ:��ȡ�����ֽ�
 u8 SPI_ReadWriteByte(u8 TxData) {
 	u8 retry = 0;
 	while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET) { //���ָ����SPI��־λ�������:���ͻ���ձ�־λ

@@ -3,10 +3,8 @@
 void flash_gpio_init(void) {
 	GPIO_InitTypeDef GPIO_InitStructure;
 
-	/* ʹ��SPIʱ�� */
 	RCC_APB1PeriphClockCmd (SPI_CLOCK, ENABLE );
 	RCC_APB2PeriphClockCmd (FLASH_SPI_GPIO, ENABLE );
-
 
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_InitStructure.GPIO_Pin = FLASH_SPI_CS_PIN;
