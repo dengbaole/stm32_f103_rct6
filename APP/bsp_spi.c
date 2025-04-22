@@ -1,36 +1,17 @@
 #include "bsp_spi.h"
 
 
+
+
+
+
 void spi2_init(void) {
 	SPI_InitTypeDef  SPI_InitStructure;
 	GPIO_InitTypeDef GPIO_InitStructure;
 
-	/* Ê¹ÄÜSPIÊ±ÖÓ */
-	RCC_APB1PeriphClockCmd (FLASH_SPI_CLK, ENABLE );
-	RCC_APB2PeriphClockCmd (FLASH_SPI_GPIO, ENABLE );
+	/* Ê¹ï¿½ï¿½SPIÊ±ï¿½ï¿½ */
+	RCC_APB1PeriphClockCmd (RCC_APB1Periph_SPI2, ENABLE );
 
-
-	//flashÒý½ÅÅäÖÃ
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_Pin = FLASH_SPI_CS_PIN;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-	GPIO_Init(FLASH_SPI_CS_PORT, &GPIO_InitStructure);
-
-	GPIO_InitStructure.GPIO_Pin = FLASH_SPI_SCK_PIN;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
-	GPIO_Init(FLASH_SPI_SCK_PORT, &GPIO_InitStructure);
-
-	GPIO_InitStructure.GPIO_Pin = FLASH_SPI_MISO_PIN;
-	GPIO_Init(FLASH_SPI_MISO_PORT, &GPIO_InitStructure);
-
-	GPIO_InitStructure.GPIO_Pin = FLASH_SPI_MOSI_PIN;
-	GPIO_Init(FLASH_SPI_MOSI_PORT, &GPIO_InitStructure);
-
-	/* Í£Ö¹ÐÅºÅ FLASH: CSÒý½Å¸ßµçÆ½*/
-	SPI_FLASH_CS_HIGH();
-
-	/* SPI Ä£Ê½ÅäÖÃ */
-	// FLASHÐ¾Æ¬ Ö§³ÖSPIÄ£Ê½0¼°Ä£Ê½3£¬¾Ý´ËÉèÖÃCPOL CPHA
 	SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
 	SPI_InitStructure.SPI_Mode = SPI_Mode_Master;
 	SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;
@@ -40,45 +21,42 @@ void spi2_init(void) {
 	SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_4;
 	SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
 	SPI_InitStructure.SPI_CRCPolynomial = 7;
-	SPI_Init(FLASH_SPIx, &SPI_InitStructure);
-
-	/* Ê¹ÄÜ SPI  */
-	SPI_Cmd(FLASH_SPIx, ENABLE);
-
-	SPI_ReadWriteByte(0xff);//Æô¶¯´«Êä
+	SPI_Init(SPI2, &SPI_InitStructure);
+	SPI_Cmd(SPI2, ENABLE);
 }
 
-//SPI ËÙ¶ÈÉèÖÃº¯Êý
+
+//SPI ï¿½Ù¶ï¿½ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½
 //SpeedSet:
-//SPI_BaudRatePrescaler_2   2·ÖÆµ   (SPI 36M@sys 72M)
-//SPI_BaudRatePrescaler_8   8·ÖÆµ   (SPI 9M@sys 72M)
-//SPI_BaudRatePrescaler_16  16·ÖÆµ  (SPI 4.5M@sys 72M)
-//SPI_BaudRatePrescaler_256 256·ÖÆµ (SPI 281.25K@sys 72M)
+//SPI_BaudRatePrescaler_2   2ï¿½ï¿½Æµ   (SPI 36M@sys 72M)
+//SPI_BaudRatePrescaler_8   8ï¿½ï¿½Æµ   (SPI 9M@sys 72M)
+//SPI_BaudRatePrescaler_16  16ï¿½ï¿½Æµ  (SPI 4.5M@sys 72M)
+//SPI_BaudRatePrescaler_256 256ï¿½ï¿½Æµ (SPI 281.25K@sys 72M)
 
 void SPI1_SetSpeed(u8 SpeedSet) {
 	SPI_InitTypeDef SPI_InitStructure;
 	SPI_InitStructure.SPI_BaudRatePrescaler = SpeedSet ;
-	SPI_Init(FLASH_SPIx, &SPI_InitStructure);
-	SPI_Cmd(FLASH_SPIx, ENABLE);
+	SPI_Init(SPI2, &SPI_InitStructure);
+	SPI_Cmd(SPI2, ENABLE);
 }
 
 
-//SPIx ¶ÁÐ´Ò»¸ö×Ö½Ú
-//TxData:ÒªÐ´ÈëµÄ×Ö½Ú
-//·µ»ØÖµ:¶ÁÈ¡µ½µÄ×Ö½Ú
+//SPIx ï¿½ï¿½Ð´Ò»ï¿½ï¿½ï¿½Ö½ï¿½
+//TxData:ÒªÐ´ï¿½ï¿½ï¿½ï¿½Ö½ï¿½
+//ï¿½ï¿½ï¿½ï¿½Öµ:ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½
 u8 SPI_ReadWriteByte(u8 TxData) {
 	u8 retry = 0;
-	while (SPI_I2S_GetFlagStatus(FLASH_SPIx, SPI_I2S_FLAG_TXE) == RESET) { //¼ì²éÖ¸¶¨µÄSPI±êÖ¾Î»ÉèÖÃÓë·ñ:·¢ËÍ»º´æ¿Õ±êÖ¾Î»
+	while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET) { //ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½SPIï¿½ï¿½Ö¾Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½Õ±ï¿½Ö¾Î»
 		retry++;
 		if(retry > 200)return 0;
 	}
-	SPI_I2S_SendData(FLASH_SPIx, TxData); //Í¨¹ýÍâÉèSPIx·¢ËÍÒ»¸öÊý¾Ý
+	SPI_I2S_SendData(SPI2, TxData); //Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½SPIxï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	retry = 0;
 
-	while (SPI_I2S_GetFlagStatus(FLASH_SPIx, SPI_I2S_FLAG_RXNE) == RESET) { //¼ì²éÖ¸¶¨µÄSPI±êÖ¾Î»ÉèÖÃÓë·ñ:½ÓÊÜ»º´æ·Ç¿Õ±êÖ¾Î»
+	while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_RXNE) == RESET) { //ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½SPIï¿½ï¿½Ö¾Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:ï¿½ï¿½ï¿½Ü»ï¿½ï¿½ï¿½Ç¿Õ±ï¿½Ö¾Î»
 		retry++;
 		if(retry > 200)return 0;
 	}
-	return SPI_I2S_ReceiveData(FLASH_SPIx); //·µ»ØÍ¨¹ýSPIx×î½ü½ÓÊÕµÄÊý¾Ý
+	return SPI_I2S_ReceiveData(SPI2); //ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½SPIxï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½
 }
 

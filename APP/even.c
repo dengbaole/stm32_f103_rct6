@@ -16,6 +16,9 @@ void main_handler(uevt_t* evt) {
 	static uint8_t h = 0;
 	switch(evt->evt_id) {
 		case UEVT_APP_BOOT:
+			lcd_gpio_init();
+			flash_gpio_init();
+			spi2_init();
 			lcd_init();//LCD初始化
 			led_init();//LED初始化
 			RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);

@@ -574,6 +574,16 @@
               <FileType>1</FileType>
               <FilePath>.\APP\led_drv.c</FilePath>
             </File>
+            <File>
+              <FileName>bsp_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\APP\bsp_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>flash_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\APP\flash_drv.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
