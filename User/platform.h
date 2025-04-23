@@ -10,6 +10,7 @@
 #include "uevent.h"
 #include "even.h"
 #include "lcd_init.h"
+#include "flash_drv.h"
 //#include "bsp_led.h"
 //#include "bsp_button.h"
 //#include "bsp_usart.h"

@@ -32,17 +32,21 @@ void SPI1_SetSpeed(u8 SpeedSet) {
 
 u8 SPI_ReadWriteByte(u8 TxData) {
 	u8 retry = 0;
-	while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET) { //���ָ����SPI��־λ�������:���ͻ���ձ�־λ
+	while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET) {
 		retry++;
-		if(retry > 200)return 0;
+		if(retry > 200) {
+			return 0;
+		}
 	}
-	SPI_I2S_SendData(SPI2, TxData); //ͨ������SPIx����һ������
+	SPI_I2S_SendData(SPI2, TxData);
 	retry = 0;
 
-	while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_RXNE) == RESET) { //���ָ����SPI��־λ�������:���ܻ���ǿձ�־λ
+	while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_RXNE) == RESET) {
 		retry++;
-		if(retry > 200)return 0;
+		if(retry > 200) {
+			return 0;
+		}
 	}
-	return SPI_I2S_ReceiveData(SPI2); //����ͨ��SPIx������յ�����
+	return SPI_I2S_ReceiveData(SPI2);
 }
 

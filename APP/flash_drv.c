@@ -1,5 +1,8 @@
 #include "flash_drv.h"
 
+uint16_t SPI_FLASH_TYPE = W25Q64; //默认就是25Q64
+
+
 void flash_gpio_init(void) {
 	GPIO_InitTypeDef GPIO_InitStructure;
 
@@ -22,4 +25,18 @@ void flash_gpio_init(void) {
 	GPIO_Init(FLASH_SPI_MOSI_PORT, &GPIO_InitStructure);
 
 	SPI_FLASH_CS_HIGH();
+}
+
+
+uint16_t SpiFlashReadID(void) {
+	uint16_t Temp = 0;
+	SPI_FLASH_CS_LOW();
+	SPI_ReadWriteByte(0x90);//发送读取ID命令
+	SPI_ReadWriteByte(0x00);
+	SPI_ReadWriteByte(0x00);
+	SPI_ReadWriteByte(0x00);
+	Temp |= SPI_ReadWriteByte(0xFF) << 8;
+	Temp |= SPI_ReadWriteByte(0xFF);
+	SPI_FLASH_CS_HIGH();
+	return Temp;
 }

@@ -6,6 +6,7 @@
 
 #include "pic.h"
 
+
 //处理打印测试
 void main_handler(uevt_t* evt) {
 	char time_string[9]; // HH:MM:SS 格式需要 9 个字符（包括结束符）
@@ -19,6 +20,7 @@ void main_handler(uevt_t* evt) {
 			lcd_gpio_init();
 			flash_gpio_init();
 			spi2_init();
+			SPI_FLASH_TYPE = SpiFlashReadID(); //读取FLASH ID.
 			lcd_init();//LCD初始化
 			led_init();//LED初始化
 			lcd_clear(0, 0, LCD_W, LCD_H, BLACK);
