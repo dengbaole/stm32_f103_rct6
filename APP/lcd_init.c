@@ -41,9 +41,9 @@ void lcd_gpio_init(void) {
 
 void LCD_Writ_Bus(u8 dat) {
 	LCD_CS_Clr();
-	while (SPI_I2S_GetFlagStatus(LCD_SPI, SPI_I2S_FLAG_TXE) == RESET); 
-	SPI_I2S_SendData(LCD_SPI, dat);                                    
-	while (SPI_I2S_GetFlagStatus(LCD_SPI, SPI_I2S_FLAG_BSY) == SET);   
+	while (SPI_I2S_GetFlagStatus(LCD_SPI, SPI_I2S_FLAG_TXE) == RESET);
+	SPI_I2S_SendData(LCD_SPI, dat);
+	while (SPI_I2S_GetFlagStatus(LCD_SPI, SPI_I2S_FLAG_BSY) == SET);
 	LCD_CS_Set();
 }
 
