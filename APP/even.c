@@ -20,7 +20,8 @@ void main_handler(uevt_t* evt) {
 			lcd_gpio_init();
 			flash_gpio_init();
 			spi2_init();
-			SPI_FLASH_TYPE = SpiFlashReadID(); //读取FLASH ID.
+			SPI_FLASH_TYPE = flash_reas_id(); //读取FLASH ID.
+			flash_erase(); 
 			lcd_init();//LCD初始化
 			led_init();//LED初始化
 			lcd_clear(0, 0, LCD_W, LCD_H, BLACK);

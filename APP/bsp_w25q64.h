@@ -8,6 +8,8 @@
 #define W25Q32 	0XEF15
 #define W25Q64 	0XEF16
 
+#define RANDOM_BYTE 0XFF
+
 
 extern u16 SPI_FLASH_TYPE;		//定义我们使用的flash芯片型号
 
@@ -36,16 +38,16 @@ extern u8 SPI_FLASH_BUF[4096];
 #define W25X_JEDEC_DEVICE_ID	 0x9F
 
 void SpiFlashInit(void);
-uint16_t SpiFlashReadID(void);    //读取FLASH ID
-uint8_t	SpiFlashReadSR(void);     //读取状态寄存器
+uint16_t flash_reas_id(void);    //读取FLASH ID
+uint8_t	flash_read_sr(void);     //读取状态寄存器
 void SpiFlashWriteSR(uint8_t sr); //写状态寄存器
-void SpiFlashWriteEnable(void);   //写使能
+void flsh_write_enable(void);   //写使能
 void SpiFlashWriteDisable(void);  //写保护
 void SpiFlashRead(uint8_t* pBuffer, uint32_t ReadAddr, uint16_t NumByteToRead); //读取flash
 void SpiFlashWrite(uint8_t* pBuffer, uint32_t WriteAddr, uint16_t NumByteToWrite); //写入flash
 void SpiFlashEraseChip(void);    	           //整片擦除
 void SpiFlashEraseSector(uint32_t Dst_Addr);   //扇区擦除
-void SpiFlashWaitBusy(void);                   //等待空闲
+void flash_wait_busy(void);                   //等待空闲
 void SpiFlashPowerDown(void);                  //进入掉电模式
 void SpiFlashWAKEUP(void);			           //唤醒
 

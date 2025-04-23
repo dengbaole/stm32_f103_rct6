@@ -28,7 +28,7 @@ void flash_gpio_init(void) {
 }
 
 
-uint16_t SpiFlashReadID(void) {
+uint16_t flash_reas_id(void) {
 	uint16_t Temp = 0;
 	SPI_FLASH_CS_LOW();
 	SPI_ReadWriteByte(0x90);//发送读取ID命令
@@ -39,4 +39,35 @@ uint16_t SpiFlashReadID(void) {
 	Temp |= SPI_ReadWriteByte(0xFF);
 	SPI_FLASH_CS_HIGH();
 	return Temp;
+}
+
+uint8_t flash_read_sr(void) {
+	uint8_t byte = 0;
+	SPI_FLASH_CS_LOW();                          //使能器件
+	SPI_ReadWriteByte(W25X_READ_STATU_TEG);    //发送读取状态寄存器命令
+	byte = SPI_ReadWriteByte(RANDOM_BYTE);           //读取一个字节
+	SPI_FLASH_CS_HIGH();                          //取消片选
+	return byte;
+}
+
+//等待空闲
+void flash_wait_busy(void) {
+	while((flash_read_sr() & 0x01) == 0x01); // 等待BUSY位清空
+}
+
+//SPI_FLASH写使能
+//将WEL置位
+void flsh_write_enable(void) {
+	SPI_FLASH_CS_LOW();                          //使能器件
+	SPI_ReadWriteByte(W25X_WRITE_ENABLE);      //发送写使能
+	SPI_FLASH_CS_HIGH();                          //取消片选
+}
+
+void flash_erase(void) {
+	flsh_write_enable();                  //SET WEL
+	flash_wait_busy();
+	SPI_FLASH_CS_LOW();                          //使能器件
+	SPI_ReadWriteByte(W25X_CHIP_ERASE);        //发送片擦除命令
+	SPI_FLASH_CS_HIGH();                          //取消片选
+	flash_wait_busy();   				   //等待芯片擦除结束
 }
