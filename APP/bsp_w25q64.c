@@ -35,7 +35,7 @@ void SpiFlashInit(void) {
 u8 SpiFlashReadSR(void) {
 	u8 byte = 0;
 	SPI_FLASH_CS = 0;                          //使能器件
-	SPI_ReadWriteByte(W25X_ReadStatusReg);    //发送读取状态寄存器命令
+	SPI_ReadWriteByte(W25X_READ_STATU_TEG);    //发送读取状态寄存器命令
 	byte = SPI_ReadWriteByte(0Xff);           //读取一个字节
 	SPI_FLASH_CS = 1;                          //取消片选
 	return byte;
@@ -44,7 +44,7 @@ u8 SpiFlashReadSR(void) {
 //只有SPR,TB,BP2,BP1,BP0(bit 7,5,4,3,2)可以写!!!
 void SpiFlashWriteSR(u8 sr) {
 	SPI_FLASH_CS = 0;                          //使能器件
-	SPI_ReadWriteByte(W25X_WriteStatusReg);   //发送写取状态寄存器命令
+	SPI_ReadWriteByte(W25X_WRITE_STATUS_REG);   //发送写取状态寄存器命令
 	SPI_ReadWriteByte(sr);               //写入一个字节
 	SPI_FLASH_CS = 1;                          //取消片选
 }
@@ -52,14 +52,14 @@ void SpiFlashWriteSR(u8 sr) {
 //将WEL置位
 void SpiFlashWriteEnable(void) {
 	SPI_FLASH_CS = 0;                          //使能器件
-	SPI_ReadWriteByte(W25X_WriteEnable);      //发送写使能
+	SPI_ReadWriteByte(W25X_WRITE_ENABLE);      //发送写使能
 	SPI_FLASH_CS = 1;                          //取消片选
 }
 //SPI_FLASH写禁止
 //将WEL清零
 void SpiFlashWriteDisable(void) {
 	SPI_FLASH_CS = 0;                          //使能器件
-	SPI_ReadWriteByte(W25X_WriteDisable);     //发送写禁止指令
+	SPI_ReadWriteByte(W25X_WRITE_DISABLE);     //发送写禁止指令
 	SPI_FLASH_CS = 1;                          //取消片选
 }
 //读取芯片ID W25X16的ID:0XEF14
@@ -80,13 +80,13 @@ u16 SpiFlashReadID(void) {
 //pBuffer:数据存储区
 //ReadAddr:开始读取的地址(24bit)
 //NumByteToRead:要读取的字节数(最大65535)
-void SpiFlashRead(u8* pBuffer, u32 ReadAddr, u16 NumByteToRead) {
+void SpiFlashRead(uint8_t* pBuffer, uint32_t ReadAddr, uint16_t NumByteToRead) {
 	u16 i;
 	SPI_FLASH_CS = 0;                          //使能器件
-	SPI_ReadWriteByte(W25X_ReadData);         //发送读取命令
-	SPI_ReadWriteByte((u8)((ReadAddr) >> 16)); //发送24bit地址
-	SPI_ReadWriteByte((u8)((ReadAddr) >> 8));
-	SPI_ReadWriteByte((u8)ReadAddr);
+	SPI_ReadWriteByte(W25X_READ_DATA);         //发送读取命令
+	SPI_ReadWriteByte((uint8_t)((ReadAddr) >> 16)); //发送24bit地址
+	SPI_ReadWriteByte((uint8_t)((ReadAddr) >> 8));
+	SPI_ReadWriteByte((uint8_t)ReadAddr);
 	for(i = 0; i < NumByteToRead; i++) {
 		pBuffer[i] = SPI_ReadWriteByte(0XFF); //循环读数
 	}
@@ -97,14 +97,14 @@ void SpiFlashRead(u8* pBuffer, u32 ReadAddr, u16 NumByteToRead) {
 //pBuffer:数据存储区
 //WriteAddr:开始写入的地址(24bit)
 //NumByteToWrite:要写入的字节数(最大256),该数不应该超过该页的剩余字节数!!!
-void SpiFlashWritePage(u8* pBuffer, u32 WriteAddr, u16 NumByteToWrite) {
+void SpiFlashWritePage(uint8_t* pBuffer, uint32_t WriteAddr, uint16_t NumByteToWrite) {
 	u16 i;
 	SpiFlashWriteEnable();                  //SET WEL
 	SPI_FLASH_CS = 0;                          //使能器件
-	SPI_ReadWriteByte(W25X_PageProgram);      //发送写页命令
-	SPI_ReadWriteByte((u8)((WriteAddr) >> 16)); //发送24bit地址
-	SPI_ReadWriteByte((u8)((WriteAddr) >> 8));
-	SPI_ReadWriteByte((u8)WriteAddr);
+	SPI_ReadWriteByte(W25X_PAGE_PROGRAM);      //发送写页命令
+	SPI_ReadWriteByte((uint8_t)((WriteAddr) >> 16)); //发送24bit地址
+	SPI_ReadWriteByte((uint8_t)((WriteAddr) >> 8));
+	SPI_ReadWriteByte((uint8_t)WriteAddr);
 	for(i = 0; i < NumByteToWrite; i++) {
 		SPI_ReadWriteByte(pBuffer[i]); //循环写数
 	}
@@ -119,7 +119,7 @@ void SpiFlashWritePage(u8* pBuffer, u32 WriteAddr, u16 NumByteToWrite) {
 //WriteAddr:开始写入的地址(24bit)
 //NumByteToWrite:要写入的字节数(最大65535)
 //CHECK OK
-void SpiFlashWriteNoCheck(u8* pBuffer, u32 WriteAddr, u16 NumByteToWrite) {
+void SpiFlashWriteNoCheck(uint8_t* pBuffer, uint32_t WriteAddr, uint16_t NumByteToWrite) {
 	u16 pageremain;
 	pageremain = 256 - WriteAddr % 256; //单页剩余的字节数
 	if(NumByteToWrite <= pageremain) {
@@ -147,12 +147,12 @@ void SpiFlashWriteNoCheck(u8* pBuffer, u32 WriteAddr, u16 NumByteToWrite) {
 //pBuffer:数据存储区
 //WriteAddr:开始写入的地址(24bit)
 //NumByteToWrite:要写入的字节数(最大65535)
-u8 SPI_FLASH_BUF[4096];
-void SpiFlashWrite(u8* pBuffer, u32 WriteAddr, u16 NumByteToWrite) {
-	u32 secpos;
-	u16 secoff;
-	u16 secremain;
-	u16 i;
+uint8_t SPI_FLASH_BUF[4096];
+void SpiFlashWrite(uint8_t* pBuffer, uint32_t WriteAddr, uint16_t NumByteToWrite) {
+	uint32_t secpos;
+	uint16_t secoff;
+	uint16_t secremain;
+	uint16_t i;
 
 	secpos = WriteAddr / 4096; //扇区地址 0~511 for w25x16
 	secoff = WriteAddr % 4096; //在扇区内的偏移
@@ -203,22 +203,22 @@ void SpiFlashEraseChip(void) {
 	SpiFlashWriteEnable();                  //SET WEL
 	SpiFlashWaitBusy();
 	SPI_FLASH_CS = 0;                          //使能器件
-	SPI_ReadWriteByte(W25X_ChipErase);        //发送片擦除命令
+	SPI_ReadWriteByte(W25X_CHIP_ERASE);        //发送片擦除命令
 	SPI_FLASH_CS = 1;                          //取消片选
 	SpiFlashWaitBusy();   				   //等待芯片擦除结束
 }
 //擦除一个扇区
 //Dst_Addr:扇区地址 0~511 for w25x16
 //擦除一个山区的最少时间:150ms
-void SpiFlashEraseSector(u32 Dst_Addr) {
+void SpiFlashEraseSector(uint32_t Dst_Addr) {
 	Dst_Addr *= 4096;
 	SpiFlashWriteEnable();                  //SET WEL
 	SpiFlashWaitBusy();
 	SPI_FLASH_CS = 0;                          //使能器件
-	SPI_ReadWriteByte(W25X_SectorErase);      //发送扇区擦除指令
-	SPI_ReadWriteByte((u8)((Dst_Addr) >> 16)); //发送24bit地址
-	SPI_ReadWriteByte((u8)((Dst_Addr) >> 8));
-	SPI_ReadWriteByte((u8)Dst_Addr);
+	SPI_ReadWriteByte(W25X_SECTOR_ERASE);      //发送扇区擦除指令
+	SPI_ReadWriteByte((uint8_t)((Dst_Addr) >> 16)); //发送24bit地址
+	SPI_ReadWriteByte((uint8_t)((Dst_Addr) >> 8));
+	SPI_ReadWriteByte((uint8_t)Dst_Addr);
 	SPI_FLASH_CS = 1;                          //取消片选
 	SpiFlashWaitBusy();   				   //等待擦除完成
 }
@@ -229,7 +229,7 @@ void SpiFlashWaitBusy(void) {
 //进入掉电模式
 void SpiFlashPowerDown(void) {
 	SPI_FLASH_CS = 0;                          //使能器件
-	SPI_ReadWriteByte(W25X_PowerDown);        //发送掉电命令
+	SPI_ReadWriteByte(W25X_POWER_DOWN);        //发送掉电命令
 	SPI_FLASH_CS = 1;                          //取消片选
 	//delay_us(3);                               //等待TPD
 	delay_us(3);
@@ -237,7 +237,7 @@ void SpiFlashPowerDown(void) {
 //唤醒
 void SpiFlashWAKEUP(void) {
 	SPI_FLASH_CS = 0;                          //使能器件
-	SPI_ReadWriteByte(W25X_ReleasePowerDown);   //  send W25X_PowerDown command 0xAB
+	SPI_ReadWriteByte(W25X_RELEASE_POWER_DOWN);   //  send W25X_POWER_DOWN command 0xAB
 	SPI_FLASH_CS = 1;                          //取消片选
 	//delay_us(3);                               //等待TRES1
 	delay_us(3);

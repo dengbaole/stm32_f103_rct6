@@ -18,36 +18,36 @@ extern u8 SPI_FLASH_BUF[4096];
 //W25X64读写
 #define FLASH_ID 0XEF16
 //指令表
-#define W25X_WriteEnable		0x06
-#define W25X_WriteDisable		0x04
-#define W25X_ReadStatusReg		0x05
-#define W25X_WriteStatusReg		0x01
-#define W25X_ReadData			0x03
-#define W25X_FastReadData		0x0B
-#define W25X_FastReadDual		0x3B
-#define W25X_PageProgram		0x02
-#define W25X_BlockErase			0xD8
-#define W25X_SectorErase		0x20
-#define W25X_ChipErase			0xC7
-#define W25X_PowerDown			0xB9
-#define W25X_ReleasePowerDown	0xAB
-#define W25X_DeviceID			0xAB
-#define W25X_ManufactDeviceID	0x90
-#define W25X_JedecDeviceID		0x9F
+#define W25X_WRITE_ENABLE		 0x06
+#define W25X_WRITE_DISABLE		 0x04
+#define W25X_READ_STATU_TEG		 0x05
+#define W25X_WRITE_STATUS_REG	 0x01
+#define W25X_READ_DATA			 0x03
+#define W25X_FAST_READ_DATA		 0x0B
+#define W25X_FAST_READ_DUAL		 0x3B
+#define W25X_PAGE_PROGRAM		 0x02
+#define W25X_BLOCK_ERASE		 0xD8
+#define W25X_SECTOR_ERASE		 0x20
+#define W25X_CHIP_ERASE			 0xC7
+#define W25X_POWER_DOWN			 0xB9
+#define W25X_RELEASE_POWER_DOWN	 0xAB
+#define W25X_DEVICE_ID			 0xAB
+#define W25X_MANUFACT_DEVICE_ID	 0x90
+#define W25X_JEDEC_DEVICE_ID	 0x9F
 
 void SpiFlashInit(void);
-u16  SpiFlashReadID(void);  	    //读取FLASH ID
-u8	 SpiFlashReadSR(void);        //读取状态寄存器
-void SpiFlashWriteSR(u8 sr);  	//写状态寄存器
-void SpiFlashWriteEnable(void);  //写使能
-void SpiFlashWriteDisable(void);	//写保护
-void SpiFlashRead(u8* pBuffer, u32 ReadAddr, u16 NumByteToRead); //读取flash
-void SpiFlashWrite(u8* pBuffer, u32 WriteAddr, u16 NumByteToWrite); //写入flash
-void SpiFlashEraseChip(void);    	  //整片擦除
-void SpiFlashEraseSector(u32 Dst_Addr);//扇区擦除
-void SpiFlashWaitBusy(void);           //等待空闲
-void SpiFlashPowerDown(void);           //进入掉电模式
-void SpiFlashWAKEUP(void);			  //唤醒
+uint16_t SpiFlashReadID(void);    //读取FLASH ID
+uint8_t	SpiFlashReadSR(void);     //读取状态寄存器
+void SpiFlashWriteSR(uint8_t sr); //写状态寄存器
+void SpiFlashWriteEnable(void);   //写使能
+void SpiFlashWriteDisable(void);  //写保护
+void SpiFlashRead(uint8_t* pBuffer, uint32_t ReadAddr, uint16_t NumByteToRead); //读取flash
+void SpiFlashWrite(uint8_t* pBuffer, uint32_t WriteAddr, uint16_t NumByteToWrite); //写入flash
+void SpiFlashEraseChip(void);    	           //整片擦除
+void SpiFlashEraseSector(uint32_t Dst_Addr);   //扇区擦除
+void SpiFlashWaitBusy(void);                   //等待空闲
+void SpiFlashPowerDown(void);                  //进入掉电模式
+void SpiFlashWAKEUP(void);			           //唤醒
 
 
 
