@@ -16,7 +16,7 @@ extern u16 SPI_FLASH_TYPE;		//定义我们使用的flash芯片型号
 #define	SPI_FLASH_CS PBout(12)  //选中FLASH					 
 
 
-extern u8 SPI_FLASH_BUF[4096];
+extern u8 flash_buff[4096];
 //W25X64读写
 #define FLASH_ID 0XEF16
 //指令表

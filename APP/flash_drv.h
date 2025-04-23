@@ -53,9 +53,12 @@
 
 extern uint16_t SPI_FLASH_TYPE;
 
+extern uint8_t flash_buff[4096];
+
+
 void flash_gpio_init(void);
 uint16_t flash_reas_id(void);
-void flash_erase(void);  
+void flash_erase(void);
 
 #endif
 

@@ -147,7 +147,7 @@ void SpiFlashWriteNoCheck(uint8_t* pBuffer, uint32_t WriteAddr, uint16_t NumByte
 //pBuffer:数据存储区
 //WriteAddr:开始写入的地址(24bit)
 //NumByteToWrite:要写入的字节数(最大65535)
-uint8_t SPI_FLASH_BUF[4096];
+uint8_t flash_buff[4096];
 void SpiFlashWrite(uint8_t* pBuffer, uint32_t WriteAddr, uint16_t NumByteToWrite) {
 	uint32_t secpos;
 	uint16_t secoff;
@@ -162,18 +162,18 @@ void SpiFlashWrite(uint8_t* pBuffer, uint32_t WriteAddr, uint16_t NumByteToWrite
 		secremain = NumByteToWrite; //不大于4096个字节
 	}
 	while(1) {
-		SpiFlashRead(SPI_FLASH_BUF, secpos * 4096, 4096); //读出整个扇区的内容
+		SpiFlashRead(flash_buff, secpos * 4096, 4096); //读出整个扇区的内容
 		for(i = 0; i < secremain; i++) { //校验数据
-			if(SPI_FLASH_BUF[secoff + i] != 0XFF) {
+			if(flash_buff[secoff + i] != 0XFF) {
 				break; //需要擦除
 			}
 		}
 		if(i < secremain) { //需要擦除
 			SpiFlashEraseSector(secpos);//擦除这个扇区
 			for(i = 0; i < secremain; i++) { //复制
-				SPI_FLASH_BUF[i + secoff] = pBuffer[i];
+				flash_buff[i + secoff] = pBuffer[i];
 			}
-			SpiFlashWriteNoCheck(SPI_FLASH_BUF, secpos * 4096, 4096); //写入整个扇区
+			SpiFlashWriteNoCheck(flash_buff, secpos * 4096, 4096); //写入整个扇区
 		} else {
 			SpiFlashWriteNoCheck(pBuffer, WriteAddr, secremain); //写已经擦除了的,直接写入扇区剩余区间.
 		}

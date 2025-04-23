@@ -7,6 +7,12 @@ uint8_t time_h = 0;
 uint8_t beep_on_times = 3;
 
 
+
+#define LCD_W 80
+#define LCD_H 160
+
+
+
 void quickly_gpioinit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIOSpeed_TypeDef GPIO_Speed, GPIOMode_TypeDef GPIO_Mode, uint32_t GPIO_CLOCK) {
 	GPIO_InitTypeDef GPIO_InitStruct;
 
