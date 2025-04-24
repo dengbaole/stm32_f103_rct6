@@ -20,10 +20,10 @@ void main_handler(uevt_t* evt) {
 			lcd_gpio_init();
 			flash_gpio_init();
 			spi2_init();
-			SPI_FLASH_TYPE = flash_reas_id(); //读取FLASH ID.
+			//SPI_FLASH_TYPE = flash_reas_id(); //读取FLASH ID.
 			// flash_erase();
-			SpiFlashWrite(boot_00015_bmp.map, 0, boot_00015_bmp.h * boot_00015_bmp.w * 2);
-			SpiFlashRead(flash_buff, 0, 4096);
+			//SpiFlashWrite(boot_00015_bmp.map, 0, boot_00015_bmp.h * boot_00015_bmp.w * 2);
+			//SpiFlashRead(flash_buff, 0, 4096);
 			lcd_init();//LCD初始化
 			led_init();//LED初始化
 			lcd_clear(0, 0, LCD_W, LCD_H, BLACK);

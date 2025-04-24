@@ -199,17 +199,6 @@ void lcd_init(void) {
 	}
 	LCD_WR_REG(0x21);     //Display inversion
 	LCD_WR_REG(0x29);     //Display on
-	LCD_WR_REG(0x2A);     //Set Column Address
-	LCD_WR_DATA8(0x00);
-	LCD_WR_DATA8(0x1A);  //26
-	LCD_WR_DATA8(0x00);
-	LCD_WR_DATA8(0x69);   //105
-	LCD_WR_REG(0x2B);     //Set Page Address
-	LCD_WR_DATA8(0x00);
-	LCD_WR_DATA8(0x01);    //1
-	LCD_WR_DATA8(0x00);
-	LCD_WR_DATA8(0xA0);    //160
-	LCD_WR_REG(0x2C);
 }
 
 
