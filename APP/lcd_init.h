@@ -4,7 +4,7 @@
 #include "AllHeader.h"
 #include "bitmap.h"
 
-#define USE_HORIZONTAL 1  //ÉèÖÃºáÆÁ»òÕßÊúÆÁÏÔÊ¾ 0»ò1ÎªÊúÆÁ 2»ò3ÎªºáÆÁ
+#define USE_HORIZONTAL 1  //ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ 0ï¿½ï¿½1Îªï¿½ï¿½ï¿½ï¿½ 2ï¿½ï¿½3Îªï¿½ï¿½ï¿½ï¿½
 
 
 #if USE_HORIZONTAL==0||USE_HORIZONTAL==1
@@ -17,7 +17,7 @@
 #endif
 
 
-// Ê×ÏÈÔÚÍ·ÎÄ¼þÖÐÌí¼ÓÒÔÏÂ¶¨Òå
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¶ï¿½ï¿½ï¿½
 #define LCD_SPI               SPI2
 #define LCD_SPI_CLK           RCC_APB1Periph_SPI2
 #define LCD_SPI_GPIO          GPIOB
@@ -37,7 +37,7 @@
 #define LCD_RES_PIN          GPIO_Pin_11  // PC11
 #define LCD_BLK_PIN          GPIO_Pin_10 // PC10
 
-// DMAÅäÖÃ
+// DMAï¿½ï¿½ï¿½ï¿½
 #define LCD_DMA              DMA1
 #define LCD_DMA_CLK          RCC_AHBPeriph_DMA1
 #define LCD_DMA_TX_CHANNEL   DMA1_Channel5
@@ -88,15 +88,16 @@
 
 
 
-void lcd_gpio_init(void);//³õÊ¼»¯GPIO
-void LCD_Writ_Bus(u8 dat);//Ä£ÄâSPIÊ±Ðò
-void LCD_WR_DATA8(u8 dat);//Ð´ÈëÒ»¸ö×Ö½Ú
-void LCD_WR_DATA(u16 dat);//Ð´ÈëÁ½¸ö×Ö½Ú
-void LCD_WR_REG(u8 dat);//Ð´ÈëÒ»¸öÖ¸Áî
-void LCD_Address_Set(u16 x1, u16 y1, u16 x2, u16 y2); //ÉèÖÃ×ø±êº¯Êý
-void lcd_init(void);//LCD³õÊ¼»¯
+void lcd_gpio_init(void);//ï¿½ï¿½Ê¼ï¿½ï¿½GPIO
+void LCD_Writ_Bus(u8 dat);//Ä£ï¿½ï¿½SPIÊ±ï¿½ï¿½
+void LCD_WR_DATA8(u8 dat);//Ð´ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ö½ï¿½
+void LCD_WR_DATA(u16 dat);//Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½
+void LCD_WR_REG(u8 dat);//Ð´ï¿½ï¿½Ò»ï¿½ï¿½Ö¸ï¿½ï¿½
+void LCD_Address_Set(u16 x1, u16 y1, u16 x2, u16 y2); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½êº¯ï¿½ï¿½
+void lcd_init(void);//LCDï¿½ï¿½Ê¼ï¿½ï¿½
 void lcd_clear(u16 xsta, u16 ysta, u16 xend, u16 yend, u16 color);
 void LCD_ShowPicture2(u16 x, u16 y, const sBITMAP* pic);
+void LCD_ShowPicture_flash(uint8_t address);
 #endif
 
 
