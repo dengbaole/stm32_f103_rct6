@@ -21,16 +21,13 @@ void main_handler(uevt_t* evt) {
 			flash_gpio_init();
 			spi2_init();
 			SPI_FLASH_TYPE = flash_reas_id(); //读取FLASH ID.
-			// flash_erase();
-			SpiFlashWrite(boot_00015_bmp.map, 0, boot_00015_bmp.h * boot_00015_bmp.w * 2);
-			SpiFlashRead(flash_buff, 0, 4096);
 			lcd_init();//LCD初始化
 			led_init();//LED初始化
 			lcd_clear(0, 0, LCD_W, LCD_H, BLACK);
 			// LCD_ShowPicture(20, 45, 120, 29, gImage_pic1);
-			// LCD_ShowPicture2(0, 0,  &boot_00015_bmp);
-			LCD_ShowPicture_flash(0);
+			LCD_ShowPicture2(0, 0,  &boot_00015_bmp);
 			// LCD_ShowString(10,0,"stm32f103_rct6!",WHITE,BLACK,16,0);
+			
 			LCD_BL_ON();//打开背光
 			break;
 		case UEVT_RTC_100MS:
@@ -40,8 +37,8 @@ void main_handler(uevt_t* evt) {
 			h++;
 			if(h % 10 == 0) {
 				// LCD_ShowPicture2(0, 0,  &boot_00025_bmp);
-				LCD_ShowPicture2(0, 0,  fonts_10_12_num_array[h / 10 % 10]);
-				
+				// LCD_ShowPicture2(0, 0,  fonts_10_12_num_array[h / 10 % 10]);
+				LCD_ShowPicture_test(0, 0,  0xbbf1c+25600*(h%30));
 			}
 			// lcd_clear(0, 0, LCD_W, LCD_H, BLACK);
 			// LCD_ShowPicture(20, 45, 120, 29, gImage_pic1);

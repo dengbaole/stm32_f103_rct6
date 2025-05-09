@@ -227,22 +227,19 @@ void LCD_ShowPicture2(u16 x, u16 y, const sBITMAP* pic) {
 		}
 	}
 }
+#include "flash_drv.h"
 
-
-
-void LCD_ShowPicture_flash(uint8_t address) {
+void LCD_ShowPicture_test(u16 x, u16 y, uint32_t add) {
 	u16 i, j;
-	u32 k = 0;
-	u8 flash_buff[1600];
-	LCD_Address_Set(0, 0, LCD_W - 1, LCD_H - 1);
+	u32 k = add;
+	LCD_Address_Set(x, y, 80 - 1, 160 - 1);
+	// memset(sector_data, 0x80, 1600);
 	
-	for(uint8_t i = 0; i < 16; i++){
-		k = 0;
-		SpiFlashRead(flash_buff, i * 1600, 1600);
-		for(i = 0; i < 800; i++) {
-				LCD_WR_DATA8(flash_buff[k * 2]);
-				LCD_WR_DATA8(flash_buff[k * 2 + 1]);
-				k++;
+	for(i = 0; i < 16; i++) {
+		SpiFlashRead(sector_data, k+i*1600, 1600);
+		for(j = 0; j < 800; j++) {
+			LCD_WR_DATA8(sector_data[j*2]);
+			LCD_WR_DATA8(sector_data[j*2+1]);
 		}
 	}
 }

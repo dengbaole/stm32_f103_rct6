@@ -1,7 +1,7 @@
 #include "flash_drv.h"
 
-uint8_t flash_buff[4096];
-uint16_t SPI_FLASH_TYPE = W25Q64; //默认就是25Q64
+uint8_t sector_data[4096];
+uint16_t SPI_FLASH_TYPE = 0; //默认就是25Q64
 
 
 void flash_gpio_init(void) {
@@ -181,18 +181,18 @@ void SpiFlashWrite(uint8_t* pBuffer, uint32_t WriteAddr, uint16_t NumByteToWrite
 		secremain = NumByteToWrite; //不大于4096个字节
 	}
 	while(1) {
-		SpiFlashRead(flash_buff, secpos * 4096, 4096); //读出整个扇区的内容
+		SpiFlashRead(sector_data, secpos * 4096, 4096); //读出整个扇区的内容
 		for(i = 0; i < secremain; i++) { //校验数据
-			if(flash_buff[secoff + i] != 0XFF) {
+			if(sector_data[secoff + i] != 0XFF) {
 				break; //需要擦除
 			}
 		}
 		if(i < secremain) { //需要擦除
 			SpiFlashEraseSector(secpos);//擦除这个扇区
 			for(i = 0; i < secremain; i++) { //复制
-				flash_buff[i + secoff] = pBuffer[i];
+				sector_data[i + secoff] = pBuffer[i];
 			}
-			SpiFlashWriteNoCheck(flash_buff, secpos * 4096, 4096); //写入整个扇区
+			SpiFlashWriteNoCheck(sector_data, secpos * 4096, 4096); //写入整个扇区
 		} else {
 			SpiFlashWriteNoCheck(pBuffer, WriteAddr, secremain); //写已经擦除了的,直接写入扇区剩余区间.
 		}

@@ -53,7 +53,7 @@
 
 extern uint16_t SPI_FLASH_TYPE;
 
-extern uint8_t flash_buff[4096];
+extern uint8_t sector_data[4096];
 
 
 void flash_gpio_init(void);
