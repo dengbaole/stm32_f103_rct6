@@ -199,6 +199,7 @@ void lcd_init(void) {
 	}
 	LCD_WR_REG(0x21);     //Display inversion
 	LCD_WR_REG(0x29);     //Display on
+	
 }
 
 
