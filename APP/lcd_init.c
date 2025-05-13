@@ -1,6 +1,10 @@
 #include "lcd_init.h"
 
 
+uint8_t display_buff[DISPLAY_BUF_SIZE];
+uint8_t rx_buff[DISPLAY_BUF_SIZE];
+
+
 void lcd_gpio_init(void) {
 	GPIO_InitTypeDef  GPIO_InitStructure;
 	SPI_InitTypeDef   SPI_InitStructure;
@@ -206,27 +210,54 @@ void lcd_init(void) {
 void lcd_clear(u16 xsta, u16 ysta, u16 xend, u16 yend, u16 color) {
 	u16 i, j;
 	LCD_Address_Set(xsta, ysta, xend - 1, yend - 1); //设置显示范围
-	for(i = ysta; i < yend; i++) {
-		for(j = xsta; j < xend; j++) {
-			LCD_WR_DATA(color);
-		}
+	// for(i = ysta; i < yend; i++) {
+	// 	for(j = xsta; j < xend; j++) {
+	// 		LCD_WR_DATA(color);
+	// 	}
+	// }
+	memset(display_buff, 0x00, 1600);
+	LCD_DC_Set();  // 数据模式
+    LCD_CS_Clr();
+	for(uint16_t i = 0; i < 16; i++){
+		SPI2_SendData_DMA(display_buff, 1600);
 	}
+
+    LCD_CS_Set();
 }
 
+
+
+// void LCD_ShowPicture2(u16 x, u16 y, const sBITMAP* pic) {
+// 	u16 i, j;
+// 	u32 k = 0;
+// 	LCD_Address_Set(x, y, x + pic->w - 1, y + pic->h - 1);
+	
+// 	for(i = 0; i < pic->h; i++) {
+// 		for(j = 0; j < pic->w; j++) {
+// 			LCD_WR_DATA8(pic->map[k * 2]);
+// 			LCD_WR_DATA8(pic->map[k * 2 + 1]);
+// 			k++;
+// 		}
+// 	}
+// }
 
 void LCD_ShowPicture2(u16 x, u16 y, const sBITMAP* pic) {
-	u16 i, j;
-	u32 k = 0;
-	LCD_Address_Set(x, y, x + pic->w - 1, y + pic->h - 1);
-	
-	for(i = 0; i < pic->h; i++) {
-		for(j = 0; j < pic->w; j++) {
-			LCD_WR_DATA8(pic->map[k * 2]);
-			LCD_WR_DATA8(pic->map[k * 2 + 1]);
-			k++;
-		}
+    u32 buf_size = pic->w * pic->h * 2;
+
+    LCD_Address_Set(x, y, x + pic->w - 1, y + pic->h - 1);
+
+    LCD_DC_Set();  // 数据模式
+    LCD_CS_Clr();
+	for(uint16_t i = 0; i < 16; i++){
+		SPI2_SendData_DMA((uint8_t *)pic->map+i*1600, 1600);
 	}
+
+    LCD_CS_Set();
 }
+
+
+
+
 #include "flash_drv.h"
 
 void LCD_ShowPicture_test(u16 x, u16 y, uint32_t add) {
@@ -236,12 +267,21 @@ void LCD_ShowPicture_test(u16 x, u16 y, uint32_t add) {
 	// memset(sector_data, 0x80, 1600);
 	
 	for(i = 0; i < 16; i++) {
-		SpiFlashRead(sector_data, k+i*1600, 1600);
-		for(j = 0; j < 800; j++) {
-			LCD_WR_DATA8(sector_data[j*2]);
-			LCD_WR_DATA8(sector_data[j*2+1]);
-		}
+		SpiFlashRead(rx_buff, k+i*1600, 1600);
+		// for(j = 0; j < 800; j++) {
+		// 	LCD_WR_DATA8(sector_data[j*2]);
+		// 	LCD_WR_DATA8(sector_data[j*2+1]);
+		// }
+		LCD_DC_Set();  // 数据模式
+		LCD_CS_Clr();
+		// for(uint16_t i = 0; i < 16; i++){
+			SPI2_SendData_DMA(rx_buff, 1600);
+		// }
+
+		LCD_CS_Set();
 	}
 }
+
+
 
 

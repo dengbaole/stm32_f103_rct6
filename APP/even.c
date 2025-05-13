@@ -23,22 +23,23 @@ void main_handler(uevt_t* evt) {
 			SPI_FLASH_TYPE = flash_reas_id(); //读取FLASH ID.
 			lcd_init();//LCD初始化
 			led_init();//LED初始化
-			lcd_clear(0, 0, LCD_W, LCD_H, BLACK);
+			lcd_clear(0, 0, LCD_W, LCD_H, WHITE);
 			// LCD_ShowPicture(20, 45, 120, 29, gImage_pic1);
-			LCD_ShowPicture2(0, 0,  &boot_00015_bmp);
+			// LCD_ShowPicture2(0, 0,  &boot_00015_bmp);
+			// LCD_ShowPicture_test(0, 0,  0);
 			// LCD_ShowString(10,0,"stm32f103_rct6!",WHITE,BLACK,16,0);
 			
 			LCD_BL_ON();//打开背光
 			break;
-		case UEVT_RTC_100MS:
+		case UEVT_RTC_10MS:
 			if(started) {
 				//LOG_HEAD("[%08d]:\n", tick++);
 			}
 			h++;
-			if(h % 10 == 0) {
+			if(h % 3 == 0) {
 				// LCD_ShowPicture2(0, 0,  &boot_00025_bmp);
 				// LCD_ShowPicture2(0, 0,  fonts_10_12_num_array[h / 10 % 10]);
-				LCD_ShowPicture_test(0, 0,  0xbbf1c+25600*(h%30));
+				
 			}
 			// lcd_clear(0, 0, LCD_W, LCD_H, BLACK);
 			// LCD_ShowPicture(20, 45, 120, 29, gImage_pic1);
@@ -57,56 +58,6 @@ void main_handler(uevt_t* evt) {
 			// } else if(tick_1MS % 1000 == 0) {
 			// 	LED_R(ON);
 			// }
-			break;
-		case UEVT_RTC_10MS:
-			// if(pwm_n < 200) {
-			// 	pwm_n++;
-			// } else {
-			// 	pwm_n = 0;
-			// }
-			// setledr_pwm(npwmWave[pwm_n]);
-			// setledg_pwm(spwmWave[pwm_n]);
-			// tick_10MS++;
-			// if(tick_10MS % 100 == 0) {
-			// 	time_s++;
-			// 	if(time_s % 60 == 59) {
-
-			// 		time_m++;
-			// 		if(time_m % 50 == 40) {
-			// 			beep_on_times = 3;
-			// 			LCD_ShowString(100, 210, tftlcd_data.width, tftlcd_data.height, 24, "releaxe time");
-			// 		}
-			// 		if(time_m % 50 == 0) {
-			// 			beep_on_times = 1;
-			// 			LCD_ShowString(100, 210, tftlcd_data.width, tftlcd_data.height, 24, "work time");
-			// 		}
-
-			// 		if(time_m % 60 == 59) {
-			// 			time_h++;
-			// 		}
-			// 	}
-			// 	// beep_on();
-			// 	// 格式化时间字符串
-			// 	if(time_m % 50 == 40) {
-			// 		LCD_ShowString(100, 210, tftlcd_data.width, tftlcd_data.height, 24, "releaxe time");
-			// 	}
-			// 	if(time_m % 50 == 0) {
-			// 		LCD_ShowString(100, 210, tftlcd_data.width, tftlcd_data.height, 24, "work time");
-			// 	}
-			// 	sprintf(time_string, "%02d:%02d:%02d", time_h % 24, time_m % 60, time_s % 60);
-
-			// 	// 显示时间字符串在 LCD 上
-			// 	LCD_ShowString(100, 180, tftlcd_data.width, tftlcd_data.height, 24, time_string);
-
-
-			// 	LCD_2ShowPicture(0, 0, fonts_10_12_num_array[0]);
-
-
-			// }
-
-
-
-
 			break;
 
 		case UEVT_APP_START:
