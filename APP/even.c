@@ -28,7 +28,7 @@ void main_handler(uevt_t* evt) {
 			// LCD_ShowPicture2(0, 0,  &boot_00015_bmp);
 			
 			// LCD_ShowString(10,0,"stm32f103_rct6!",WHITE,BLACK,16,0);
-			LCD_ShowPicture_test(0, 0,  0xbbf1c);
+			// LCD_ShowPicture_test(0, 0,  0xbbf1c);
 			LCD_BL_ON();//打开背光
 			break;
 		case UEVT_RTC_10MS:
@@ -45,7 +45,7 @@ void main_handler(uevt_t* evt) {
 			if(h % 10 == 0) {
 				// LCD_ShowPicture2(0, 0,  &boot_00025_bmp);
 				// LCD_ShowPicture2(0, 0,  fonts_10_12_num_array[h / 10 % 10]);
-				LCD_ShowPicture_test(0, 0,  0xbbf1c+25600*(h%30));
+				// LCD_ShowPicture_test(0, 0,  0xbbf1c+25600*(h%30));
 			}
 			// lcd_clear(0, 0, LCD_W, LCD_H, BLACK);
 			// LCD_ShowPicture(20, 45, 120, 29, gImage_pic1);
