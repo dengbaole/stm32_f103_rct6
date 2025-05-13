@@ -217,12 +217,12 @@ void lcd_clear(u16 xsta, u16 ysta, u16 xend, u16 yend, u16 color) {
 	// }
 	memset(display_buff, 0x00, 1600);
 	LCD_DC_Set();  // 数据模式
-    LCD_CS_Clr();
-	for(uint16_t i = 0; i < 16; i++){
+	LCD_CS_Clr();
+	for(uint16_t i = 0; i < 16; i++) {
 		SPI2_SendData_DMA(display_buff, 1600);
 	}
 
-    LCD_CS_Set();
+	LCD_CS_Set();
 }
 
 
@@ -231,7 +231,7 @@ void lcd_clear(u16 xsta, u16 ysta, u16 xend, u16 yend, u16 color) {
 // 	u16 i, j;
 // 	u32 k = 0;
 // 	LCD_Address_Set(x, y, x + pic->w - 1, y + pic->h - 1);
-	
+
 // 	for(i = 0; i < pic->h; i++) {
 // 		for(j = 0; j < pic->w; j++) {
 // 			LCD_WR_DATA8(pic->map[k * 2]);
@@ -242,17 +242,17 @@ void lcd_clear(u16 xsta, u16 ysta, u16 xend, u16 yend, u16 color) {
 // }
 
 void LCD_ShowPicture2(u16 x, u16 y, const sBITMAP* pic) {
-    u32 buf_size = pic->w * pic->h * 2;
+	u32 buf_size = pic->w * pic->h * 2;
 
-    LCD_Address_Set(x, y, x + pic->w - 1, y + pic->h - 1);
+	LCD_Address_Set(x, y, x + pic->w - 1, y + pic->h - 1);
 
-    LCD_DC_Set();  // 数据模式
-    LCD_CS_Clr();
-	for(uint16_t i = 0; i < 16; i++){
-		SPI2_SendData_DMA((uint8_t *)pic->map+i*1600, 1600);
+	LCD_DC_Set();  // 数据模式
+	LCD_CS_Clr();
+	for(uint16_t i = 0; i < 16; i++) {
+		SPI2_SendData_DMA((uint8_t*)pic->map + i * 1600, 1600);
 	}
 
-    LCD_CS_Set();
+	LCD_CS_Set();
 }
 
 
@@ -265,21 +265,19 @@ void LCD_ShowPicture_test(u16 x, u16 y, uint32_t add) {
 	u32 k = add;
 	LCD_Address_Set(x, y, 80 - 1, 160 - 1);
 	// memset(sector_data, 0x80, 1600);
-	
+
 	for(i = 0; i < 16; i++) {
-		delay_ms(1);
-		SpiFlashRead(rx_buff, k+i*1600, 1600);
+		SpiFlashRead(rx_buff, k + i * 1600, 1600);
 		// memset(rx_buff, 0x08, 1600);
 		// for(j = 0; j < 800; j++) {
 		// 	LCD_WR_DATA8(sector_data[j*2]);
 		// 	LCD_WR_DATA8(sector_data[j*2+1]);
 		// }
-			delay_ms(1);
 		LCD_DC_Set();  // 数据模式
 		LCD_CS_Clr();
 		// for(uint16_t i = 0; i < 16; i++){
-			SPI2_SendData_DMA(rx_buff, 1600);
-			// SPI2_DMA_TransmitReceive(rx_buff,rx_buff, 1600);
+		SPI2_SendData_DMA(rx_buff, 1600);
+		// SPI2_DMA_TransmitReceive(rx_buff,rx_buff, 1600);
 		// }
 
 		LCD_CS_Set();
