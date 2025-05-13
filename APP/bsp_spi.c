@@ -31,7 +31,7 @@ void spi2_init(void) {
     SPI_InitStructure.SPI_CPOL = SPI_CPOL_Low;
     SPI_InitStructure.SPI_CPHA = SPI_CPHA_1Edge;
     SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
-    SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_256;
+    SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;
     SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
     SPI_InitStructure.SPI_CRCPolynomial = 7;
     SPI_Init(SPI2, &SPI_InitStructure);
@@ -140,24 +140,13 @@ void SPI2_SendData_DMA(uint8_t *txbuf, uint16_t len) {
 
     DMA_ClearFlag(DMA1_FLAG_TC5);                 // 清除传输完成标志
 
-    DMA1_Channel5->CCR |= DMA_CCR1_EN;            // 使能DMA通道
-
+    DMA_Cmd(DMA1_Channel5, ENABLE);
     // 等待DMA传输完成
     while (!DMA_GetFlagStatus(DMA1_FLAG_TC5));
 
-    DMA1_Channel5->CCR &= ~DMA_CCR1_EN;           // 关闭DMA通道
+    DMA_Cmd(DMA1_Channel5, DISABLE);
 }
 
-/**
- * @brief SPI2 接收数据（阻塞模式）
- * @param rxbuf 接收缓冲区
- * @param len 接收长度
- */
-void SPI2_ReceiveData_DMA(uint8_t *rxbuf, uint16_t len) {
-    uint8_t dummy_tx[len];
-    for (uint16_t i = 0; i < len; i++) dummy_tx[i] = 0xFF; // 发送0xFF以产生时钟
-    SPI2_DMA_TransmitReceive(dummy_tx, rxbuf, len);
-}
 
 void SPI2_SetSpeed(u8 SpeedSet) {
 	SPI_InitTypeDef SPI_InitStructure;

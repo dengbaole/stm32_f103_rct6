@@ -94,10 +94,9 @@ void SpiFlashRead(uint8_t* pBuffer, uint32_t ReadAddr, uint16_t NumByteToRead) {
 	// SPI_ReadWriteByte((uint8_t)((ReadAddr) >> 8));
 	// SPI_ReadWriteByte((uint8_t)ReadAddr);
 	SPI2_SendData_DMA(txBuffer, 4);
-	memset(pBuffer, 0xff, 1600);
 	SPI2_DMA_TransmitReceive(pBuffer, pBuffer, NumByteToRead);
+	// memset(pBuffer, 0x17, 1600);
 	// memset(pBuffer, 0x08, 1600);
-	// SPI2_ReceiveData_DMA(pBuffer, NumByteToRead);
 	SPI_FLASH_CS_HIGH();                          //取消片选
 }
 
