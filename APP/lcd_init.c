@@ -268,6 +268,7 @@ void LCD_ShowPicture_test(u16 x, u16 y, uint32_t add) {
 	
 	for(i = 0; i < 16; i++) {
 		SpiFlashRead(rx_buff, k+i*1600, 1600);
+		// memset(rx_buff, 0x08, 1600);
 		// for(j = 0; j < 800; j++) {
 		// 	LCD_WR_DATA8(sector_data[j*2]);
 		// 	LCD_WR_DATA8(sector_data[j*2+1]);
