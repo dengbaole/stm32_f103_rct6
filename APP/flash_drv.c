@@ -96,7 +96,7 @@ void SpiFlashRead(uint8_t* pBuffer, uint32_t ReadAddr, uint16_t NumByteToRead) {
 	// SPI2_SendData_DMA(txBuffer, 4);
 	SPI2_DMA_TransmitReceive(txBuffer, pBuffer, 4);
 	// delay_ms(1);
-	SPI2_DMA_TransmitReceive(tx_buff, pBuffer, NumByteToRead);
+	SPI2_DMA_TransmitReceive(tx_buff, pBuffer, NumByteToRead +1);
 	// delay_ms(2);
 	// memset(pBuffer, 0x17, 1600);
 	// memset(pBuffer, 0x08, 1600);
