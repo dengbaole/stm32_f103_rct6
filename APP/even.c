@@ -42,10 +42,10 @@ void main_handler(uevt_t* evt) {
 			// 	LCD_ShowPicture_test(0, 0,  0*25600*(h%30));
 
 			// }
-			if(h % 30 == 0) {
+			if(h % 3 == 0) {
 				// LCD_ShowPicture2(0, 0,  fonts_22_28_num_array[h / 10 % 35]);
 				// LCD_ShowPicture2(0, 0,  fonts_10_12_num_array[h / 10 % 10]);
-				LCD_ShowPicture_test(0, 0,  0+25600*(h/30%30));
+				LCD_ShowPicture_test(0, 0,  0+25600*(h/3%30));
 				
 			}
 			// if(h % 10 == 5) {

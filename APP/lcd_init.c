@@ -278,9 +278,9 @@ void LCD_ShowPicture_test(u16 x, u16 y, uint32_t add) {
 		LCD_DC_Set();  // 数据模式
 		LCD_CS_Clr();
 		// for(uint16_t i = 0; i < 16; i++){
-		SPI2_SendData_DMA(rx_buff, 1600);
+		// SPI2_SendData_DMA(rx_buff, 1600);
 		
-		// SPI2_DMA_TransmitReceive(rx_buff,tx_buff, 1600);
+		SPI2_DMA_TransmitReceive(rx_buff+1,tx_buff, 1600);
 		// }
 
 		LCD_CS_Set();
