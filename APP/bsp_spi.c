@@ -53,7 +53,7 @@ void spi2_init(void) {
 	SPI_InitStructure.SPI_CPOL = SPI_CPOL_Low;
 	SPI_InitStructure.SPI_CPHA = SPI_CPHA_1Edge;
 	SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
-	SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_256;
+	SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;
 	SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
 	SPI_InitStructure.SPI_CRCPolynomial = 7;
 	SPI_Init(SPI2, &SPI_InitStructure);
@@ -156,8 +156,7 @@ void SPI2_DMA_TransmitReceive(uint8_t* txbuf, uint8_t* rxbuf, uint16_t len) {
 	while (DMA_Channel_IsEnabled(DMA1_Channel5));
 	while (DMA_Channel_IsEnabled(DMA1_Channel4));
 
-	dma_tx_complete = 0;
-	dma_rx_complete = 0;
+	
 
 	/* 配置DMA发送 */
 	DMA1_Channel5->CMAR = (uint32_t)txbuf;
@@ -170,7 +169,8 @@ void SPI2_DMA_TransmitReceive(uint8_t* txbuf, uint8_t* rxbuf, uint16_t len) {
 	/* 清除DMA传输完成标志 */
 	DMA_ClearFlag(DMA1_FLAG_TC5);
 	DMA_ClearFlag(DMA1_FLAG_TC4);
-
+    dma_tx_complete = 0;
+	dma_rx_complete = 0;
 	/* 使能DMA通道 */
 	DMA_Cmd(DMA1_Channel4, ENABLE);
 	DMA_Cmd(DMA1_Channel5, ENABLE);
@@ -178,6 +178,10 @@ void SPI2_DMA_TransmitReceive(uint8_t* txbuf, uint8_t* rxbuf, uint16_t len) {
 	/* 等待DMA传输完成（中断方式） */
 	while (!dma_tx_complete);
 	while (!dma_rx_complete);
+    // while (!DMA_GetFlagStatus(DMA1_FLAG_TC5));
+    // while (!DMA_GetFlagStatus(DMA1_FLAG_TC4));
+    DMA_Cmd(DMA1_Channel5, DISABLE);
+    DMA_Cmd(DMA1_Channel4, DISABLE);
 }
 
 /**
@@ -216,9 +220,8 @@ uint8_t SPI_ReadWriteByte(uint8_t TxData) {
 // }
 void SPI2_SendData_DMA(uint8_t* txbuf, uint16_t len) {
 	// 等待DMA通道空闲
-	while (DMA1_Channel5->CCR & DMA_CCR1_EN);
-
-	dma_tx_complete = 0;  // 清除发送完成标志
+	// while (DMA1_Channel5->CCR & DMA_CCR1_EN);
+     while (DMA_Channel_IsEnabled(DMA1_Channel5) && DMA_Channel_IsEnabled(DMA1_Channel4));
 
 	// 配置DMA通道
 	DMA1_Channel5->CCR &= ~DMA_CCR1_EN;           // 关闭DMA通道
@@ -227,13 +230,18 @@ void SPI2_SendData_DMA(uint8_t* txbuf, uint16_t len) {
 	DMA1_Channel5->CNDTR = len;                   // 传输长度
 
 	DMA_ClearFlag(DMA1_FLAG_TC5);                 // 清除传输完成标志
+    DMA_ClearFlag(DMA1_FLAG_TC4);
+    dma_tx_complete = 0;
+	dma_rx_complete = 0;
 
 	DMA_Cmd(DMA1_Channel5, ENABLE);
+    DMA_Cmd(DMA1_Channel4, ENABLE);
 
 	// 等待DMA传输完成（中断方式）
 	while (!dma_tx_complete);
 
 	DMA_Cmd(DMA1_Channel5, DISABLE);
+    DMA_Cmd(DMA1_Channel4, DISABLE);
 }
 // void SPI2_SendData_DMA(uint8_t *txbuf, uint16_t len) {
 //     static uint8_t dummy_rx[1600]; // 临时接收缓冲区
