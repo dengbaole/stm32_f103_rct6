@@ -14,7 +14,7 @@ void main_handler(uevt_t* evt) {
 	static bool started = false;
 	static uint32_t tick_1MS = 0;
 	static uint32_t tick_10MS = 0;
-	static uint8_t h = 0;
+	static uint16_t h = 0;
 	switch(evt->evt_id) {
 		case UEVT_APP_BOOT:
 			lcd_gpio_init();
@@ -37,16 +37,20 @@ void main_handler(uevt_t* evt) {
 			}
 			h++;
 			// if(h % 3 == 0) {
-			// 	// LCD_ShowPicture2(0, 0,  &boot_00025_bmp);
+				
 			// 	// LCD_ShowPicture2(0, 0,  fonts_10_12_num_array[h / 10 % 10]);
 			// 	LCD_ShowPicture_test(0, 0,  0*25600*(h%30));
 
 			// }
-			if(h % 10 == 0) {
-				// LCD_ShowPicture2(0, 0,  &boot_00025_bmp);
+			if(h % 3 == 0) {
+				// LCD_ShowPicture2(0, 0,  fonts_22_28_num_array[h / 10 % 35]);
 				// LCD_ShowPicture2(0, 0,  fonts_10_12_num_array[h / 10 % 10]);
-				// LCD_ShowPicture_test(0, 0,  0xbbf1c+25600*(h%30));
+				LCD_ShowPicture_test(0, 0,  0xbbf1c+25600*(h/3%30));
+				
 			}
+			// if(h % 10 == 5) {
+			// 	// LCD_ShowPicture2(0, 0,  &boot_00000_bmp);
+			// }
 			// lcd_clear(0, 0, LCD_W, LCD_H, BLACK);
 			// LCD_ShowPicture(20, 45, 120, 29, gImage_pic1);
 			//    LCD_ShowPicture2(h%20, 45,  &boot_00000_bmp);

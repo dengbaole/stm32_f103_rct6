@@ -91,8 +91,8 @@
 #define SPLIT_SCREEN 16   //DISPLAY_WIDTH * DISPLAY_HEIGHT*2/SPLIT_SCREEN 需要整除
 #define DISPLAY_BUF_SIZE (DISPLAY_WIDTH * DISPLAY_HEIGHT*2/SPLIT_SCREEN)
 extern uint8_t display_buff[DISPLAY_BUF_SIZE];
-extern uint8_t rx_buff[DISPLAY_BUF_SIZE];
-extern uint8_t tx_buff[DISPLAY_BUF_SIZE];
+extern uint8_t rx_buff[DISPLAY_BUF_SIZE+4];
+extern uint8_t tx_buff[DISPLAY_BUF_SIZE+4];
 
 void lcd_gpio_init(void);//��ʼ��GPIO
 void LCD_Writ_Bus(u8 dat);//ģ��SPIʱ��

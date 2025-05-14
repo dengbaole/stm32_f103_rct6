@@ -2,8 +2,8 @@
 
 
 uint8_t display_buff[DISPLAY_BUF_SIZE];
-uint8_t rx_buff[DISPLAY_BUF_SIZE];
-uint8_t tx_buff[DISPLAY_BUF_SIZE];
+uint8_t rx_buff[DISPLAY_BUF_SIZE+4];
+uint8_t tx_buff[DISPLAY_BUF_SIZE+4];
 
 
 void lcd_gpio_init(void) {
@@ -268,7 +268,7 @@ void LCD_ShowPicture_test(u16 x, u16 y, uint32_t add) {
 	// memset(sector_data, 0x80, 1600);
 
 	for(i = 0; i < 16; i++) {
-		memset(tx_buff, i, 1600);
+		memset(tx_buff, 0xff, 1600);
 		SpiFlashRead(rx_buff, k + i * 1600, 1600);
 		// memset(rx_buff, i, 1600);
 		// for(j = 0; j < 800; j++) {
@@ -278,7 +278,8 @@ void LCD_ShowPicture_test(u16 x, u16 y, uint32_t add) {
 		LCD_DC_Set();  // 数据模式
 		LCD_CS_Clr();
 		// for(uint16_t i = 0; i < 16; i++){
-		SPI2_SendData_DMA(rx_buff, 1600);
+		SPI2_SendData_DMA(rx_buff+1, 1600);
+		
 		// SPI2_DMA_TransmitReceive(tx_buff,rx_buff, 1600);
 		// }
 
