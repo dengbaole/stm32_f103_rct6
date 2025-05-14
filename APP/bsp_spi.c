@@ -53,9 +53,9 @@ void spi2_init(void) {
 	SPI_InitStructure.SPI_CPOL = SPI_CPOL_Low;
 	SPI_InitStructure.SPI_CPHA = SPI_CPHA_1Edge;
 	SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
-	SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;
+	SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_256;
 	SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
-	SPI_InitStructure.SPI_CRCPolynomial = 7;
+	// SPI_InitStructure.SPI_CRCPolynomial = 7;
 	SPI_Init(SPI2, &SPI_InitStructure);
 
 	/* 使能SPI2 */
@@ -178,6 +178,12 @@ void SPI2_DMA_TransmitReceive(uint8_t* txbuf, uint8_t* rxbuf, uint16_t len) {
 	/* 等待DMA传输完成（中断方式） */
 	while (!dma_tx_complete);
 	while (!dma_rx_complete);
+    while(DMA_GetCurrDataCounter(DMA1_Channel5)){
+        ;
+    }
+     while(DMA_GetCurrDataCounter(DMA1_Channel4)){
+        ;
+    }
     // while (!DMA_GetFlagStatus(DMA1_FLAG_TC5));
     // while (!DMA_GetFlagStatus(DMA1_FLAG_TC4));
     DMA_Cmd(DMA1_Channel5, DISABLE);
@@ -239,6 +245,13 @@ void SPI2_SendData_DMA(uint8_t* txbuf, uint16_t len) {
 
 	// 等待DMA传输完成（中断方式）
 	while (!dma_tx_complete);
+    while(DMA_GetCurrDataCounter(DMA1_Channel5)){
+        ;
+    }
+     while(DMA_GetCurrDataCounter(DMA1_Channel4)){
+        ;
+    }
+    // while (!dma_rx_complete);
 
 	DMA_Cmd(DMA1_Channel5, DISABLE);
     DMA_Cmd(DMA1_Channel4, DISABLE);
