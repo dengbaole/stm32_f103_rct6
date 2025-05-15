@@ -26,7 +26,6 @@ void main_handler(uevt_t* evt) {
 			lcd_clear(0, 0, LCD_W, LCD_H, WHITE);
 			// LCD_ShowPicture(20, 45, 120, 29, gImage_pic1);
 			// LCD_ShowPicture2(0, 0,  &boot_00015_bmp);
-
 			// LCD_ShowString(10,0,"stm32f103_rct6!",WHITE,BLACK,16,0);
 			LCD_ShowPicture_test(0, 0, 0);
 			LCD_BL_ON();//打开背光
