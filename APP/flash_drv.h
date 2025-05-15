@@ -59,7 +59,7 @@ extern uint16_t SPI_FLASH_TYPE;
 void flash_gpio_init(void);
 uint16_t flash_reas_id(void);
 void flash_erase(void);
-void SpiFlashRead(uint8_t* pBuffer, uint32_t ReadAddr, uint16_t NumByteToRead);
+void W25Q128_ReadData(uint8_t* pBuffer, uint32_t ReadAddr, uint16_t NumByteToRead);
 
 #endif
 

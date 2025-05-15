@@ -46,4 +46,17 @@ typedef enum BLENDMODE {
 	CLEAR, // 清除
 } eBlendMode;
 
+typedef struct FLASH_SBITMAP {
+	const uint8_t w;
+	const uint8_t h;
+	const uint32_t map_address;
+} FLASH_sBITMAP;
+
+typedef struct FLASH_sBITMAP_TABLE {
+	uint8_t x;
+	uint8_t y;
+	FLASH_sBITMAP* bitmap;
+} FLASH_sBITMAP_TABLE;
+
+
 #endif

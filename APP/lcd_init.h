@@ -37,12 +37,6 @@
 #define LCD_RES_PIN          GPIO_Pin_11  // PC11
 #define LCD_BLK_PIN          GPIO_Pin_10 // PC10
 
-// DMA����
-#define LCD_DMA              DMA1
-#define LCD_DMA_CLK          RCC_AHBPeriph_DMA1
-#define LCD_DMA_TX_CHANNEL   DMA1_Channel5
-#define LCD_DMA_IRQn         DMA1_Channel5_IRQn
-#define LCD_DMA_IRQHandler   DMA1_Channel5_IRQHandler
 
 
 #define LCD_SCLK_Clr() GPIO_ResetBits(LCD_SPI_GPIO,LCD_SPI_PIN_SCK)//SCL=SCLK
@@ -54,11 +48,11 @@
 #define LCD_RES_Clr()  GPIO_ResetBits(GPIOC,LCD_RES_PIN)//RES
 #define LCD_RES_Set()  GPIO_SetBits(GPIOC,LCD_RES_PIN)
 
-#define LCD_DC_Clr()   GPIO_ResetBits(GPIOC,LCD_DC_PIN)//DC
-#define LCD_DC_Set()   GPIO_SetBits(GPIOC,LCD_DC_PIN)
+#define TFT_RS_CMD()   GPIO_ResetBits(GPIOC,LCD_DC_PIN)//DC
+#define TFT_RS_DATA()   GPIO_SetBits(GPIOC,LCD_DC_PIN)
 
-#define LCD_CS_Clr()   GPIO_ResetBits(GPIOD,LCD_CS_PIN)//CS
-#define LCD_CS_Set()   GPIO_SetBits(GPIOD,LCD_CS_PIN)
+#define TFT_CS_LOW()   GPIO_ResetBits(GPIOD,LCD_CS_PIN)//CS
+#define TFT_CS_HIGH()   GPIO_SetBits(GPIOD,LCD_CS_PIN)
 
 #define LCD_BL_ON()  GPIO_ResetBits(GPIOC,LCD_BLK_PIN)//BLK
 #define LCD_BL_OFF()  GPIO_SetBits(GPIOC,LCD_BLK_PIN)
@@ -99,11 +93,12 @@ void LCD_Writ_Bus(u8 dat);//ģ��SPIʱ��
 void LCD_WR_DATA8(u8 dat);//д��һ���ֽ�
 void LCD_WR_DATA(u16 dat);//д�������ֽ�
 void LCD_WR_REG(u8 dat);//д��һ��ָ��
-void LCD_Address_Set(u16 x1, u16 y1, u16 x2, u16 y2); //�������꺯��
+void tftSetWindows(u16 x1, u16 y1, u16 x2, u16 y2); //�������꺯��
 void lcd_init(void);//LCD��ʼ��
 void lcd_clear(u16 xsta, u16 ysta, u16 xend, u16 yend, u16 color);
 void LCD_ShowPicture2(u16 x, u16 y, const sBITMAP* pic);
 void LCD_ShowPicture_test(u16 x, u16 y, uint32_t add);
+void display_component(FLASH_sBITMAP_TABLE* bitmap_table);
 #endif
 
 

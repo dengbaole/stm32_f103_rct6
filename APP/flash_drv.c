@@ -80,7 +80,7 @@ void flash_erase(void) {
 //pBuffer:数据存储区
 //ReadAddr:开始读取的地址(24bit)
 //NumByteToRead:要读取的字节数(最大65535)
-void SpiFlashRead(uint8_t* pBuffer, uint32_t ReadAddr, uint16_t NumByteToRead) {
+void W25Q128_ReadData(uint8_t* pBuffer, uint32_t ReadAddr, uint16_t NumByteToRead) {
 	uint16_t i;
 	uint8_t txBuffer[4];
 	SPI_FLASH_CS_LOW();                          //使能器件

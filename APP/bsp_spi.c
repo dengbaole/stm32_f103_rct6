@@ -148,6 +148,12 @@ void SPI2_DMA_TransmitReceive(uint8_t* txbuf, uint8_t* rxbuf, uint16_t len) {
     // 等待 SPI 完成最后的数据传输
     while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET);
     while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_BSY) == SET);
+    while(DMA_GetCurrDataCounter(DMA1_Channel5)){
+        ;
+    }
+     while(DMA_GetCurrDataCounter(DMA1_Channel4)){
+        ;
+    }
 }
 
 
