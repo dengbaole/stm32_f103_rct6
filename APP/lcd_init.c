@@ -336,7 +336,7 @@ void display_component(FLASH_sBITMAP_TABLE* bitmap_table) {
 
 				if(bitmap_table[i].bitmap->h == DISPLAY_HEIGHT && bitmap_table[i].bitmap->w == DISPLAY_WIDTH) {
 					for(uint8_t k = 0; k < (draw_h_end - draw_h_start); k++) {
-						memcpy(&display_buff[(draw_h_start - current_screen_h_start + k)*DISPLAY_WIDTH * 2 + bitmap_table[i].x * 2], &rx_buff[k * bitmap_table[i].bitmap->w * 2], bitmap_table[i].bitmap->w * 2);
+						memcpy(&display_buff[(draw_h_start - current_screen_h_start + k)*DISPLAY_WIDTH * 2 + bitmap_table[i].x * 2], &rx_buff[k * bitmap_table[i].bitmap->w * 2+1], bitmap_table[i].bitmap->w * 2);
 					}
 				} else {
 					for(uint16_t k = 0; k < (draw_h_end - draw_h_start); k++) {
@@ -357,8 +357,8 @@ void display_component(FLASH_sBITMAP_TABLE* bitmap_table) {
 							// 检查是否为透明色
 							// if(pixel != 0x0000) {
 							// 复制像素到目标缓冲区
-							display_buff[dst_index] |= rx_buff[src_index];
-							display_buff[dst_index + 1] |= rx_buff[src_index + 1];
+							display_buff[dst_index] |= rx_buff[src_index+1];
+							display_buff[dst_index + 1] |= rx_buff[src_index + 2];
 							// }
 						}
 					}
@@ -378,7 +378,7 @@ void display_component(FLASH_sBITMAP_TABLE* bitmap_table) {
 
 		TFT_RS_DATA();  // 数据模式
 		TFT_CS_LOW();
-		SPI2_DMA_TransmitReceive(rx_buff+3,tx_buff, DISPLAY_BUF_SIZE);//？？
+		SPI2_DMA_TransmitReceive(display_buff,tx_buff, DISPLAY_BUF_SIZE);//？？
 		TFT_CS_HIGH();
 	}
 }
