@@ -293,3 +293,4 @@ uint8_t display_num(uint8_t index, uint8_t x, uint8_t y, FLASH_sBITMAP* bitmap, 
 
 	return index_temp;
 }
+

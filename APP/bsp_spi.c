@@ -231,7 +231,9 @@ void SPI2_SendData_DMA(uint8_t* txbuf, uint16_t len) {
     // DMA_Cmd(DMA1_Channel4, ENABLE);
 
 	// 等待DMA传输完成（中断方式）
-	while (!dma_tx_complete);
+	while (!dma_tx_complete){
+		;
+	}
     while(DMA_GetCurrDataCounter(DMA1_Channel5)){
         ;
     }
