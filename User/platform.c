@@ -126,7 +126,7 @@ void platform_init(void) {
 	//	 	;
 	//	 }
 	tim6_init(36 - 1, 100); //100us
-	tim7_init(7200 - 1, 100);//10ms
+	tim7_init(720 - 1, 100);//1ms
 	// led_init();
 	// BEEP_Init();
 	// usart_Config(115200);

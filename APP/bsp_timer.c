@@ -136,9 +136,17 @@ void TIM7_IRQHandler(void) {
 		// 清除中断标志位
 		TIM_ClearITPendingBit(TIM7, TIM_IT_Update);
 
+		// counter++;
+		// uevt_bc_e(UEVT_RTC_10MS);
+		// if((counter % 10) == 0) {
+		// 	uevt_bc_e(UEVT_RTC_100MS);
+		// }
+		uevt_bc_e(UEVT_RTC_1MS);
 		counter++;
-		uevt_bc_e(UEVT_RTC_10MS);
 		if((counter % 10) == 0) {
+			uevt_bc_e(UEVT_RTC_10MS);
+		}
+		if((counter % 100) == 0) {
 			uevt_bc_e(UEVT_RTC_100MS);
 		}
 	}

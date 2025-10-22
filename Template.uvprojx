@@ -1137,6 +1137,11 @@
               <FilePath>.\APP\lvgl\src\extra\others\fragment\lv_fragment_manager.c</FilePath>
             </File>
             <File>
+              <FileName>lv_gridnav.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\APP\lvgl\src\extra\others\gridnav\lv_gridnav.c</FilePath>
+            </File>
+            <File>
               <FileName>lv_ime_pinyin.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\APP\lvgl\src\extra\others\ime\lv_ime_pinyin.c</FilePath>

@@ -217,7 +217,7 @@ void lcd_clear(u16 xsta, u16 ysta, u16 xend, u16 yend, u16 color) {
 	// 		LCD_WR_DATA(color);
 	// 	}
 	// }
-	memset(display_buff, 0x00, 160);
+	memset(display_buff, 0x66, 160);
 	TFT_RS_DATA();  // 数据模式
 	TFT_CS_LOW();
 	for(uint16_t i = 0; i < 160; i++) {
@@ -262,7 +262,7 @@ void LCD_DrawPixel(u16 x, u16 y, u16 color) {
 	uint8_t buff_temp[2];
 	buff_temp[0] = color >> 4;
 	buff_temp[1] = color & 0x0f;
-	tftSetWindows(x, y, x - 1, y - 1);
+	tftSetWindows(x, y, x, y);
 
 	TFT_RS_DATA();  // 数据模式
 	TFT_CS_LOW();
@@ -272,7 +272,6 @@ void LCD_DrawPixel(u16 x, u16 y, u16 color) {
 
 	TFT_CS_HIGH();
 }
-
 
 
 #include "flash_drv.h"
