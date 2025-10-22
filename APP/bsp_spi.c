@@ -97,63 +97,63 @@ void spi2_init(void) {
 
 	//中断配置
 	/* 使能DMA传输完成中断 */
-    DMA_ITConfig(DMA1_Channel4, DMA_IT_TC, ENABLE);  // 接收完成中断
+	DMA_ITConfig(DMA1_Channel4, DMA_IT_TC, ENABLE);  // 接收完成中断
 	DMA_ITConfig(DMA1_Channel5, DMA_IT_TC, ENABLE);  // 发送完成中断
-	
+
 
 	/* 使能DMA中断通道NVIC */
-	  NVIC_InitTypeDef NVIC_InitStructure;
+	NVIC_InitTypeDef NVIC_InitStructure;
 
-    // DMA1_Channel4 - RX
-    NVIC_InitStructure.NVIC_IRQChannel = DMA1_Channel4_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x01;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x01;
-    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-    NVIC_Init(&NVIC_InitStructure);
+	// DMA1_Channel4 - RX
+	NVIC_InitStructure.NVIC_IRQChannel = DMA1_Channel4_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x01;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x01;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
 
-    // DMA1_Channel5 - TX
-    NVIC_InitStructure.NVIC_IRQChannel = DMA1_Channel5_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x02;
-    NVIC_Init(&NVIC_InitStructure);
+	// DMA1_Channel5 - TX
+	NVIC_InitStructure.NVIC_IRQChannel = DMA1_Channel5_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x02;
+	NVIC_Init(&NVIC_InitStructure);
 
 }
 
 void SPI2_DMA_TransmitReceive(uint8_t* txbuf, uint8_t* rxbuf, uint16_t len) {
-    // 等待 DMA 通道空闲
-    while (DMA1_Channel5->CCR & DMA_CCR1_EN);
-    while (DMA1_Channel4->CCR & DMA_CCR1_EN);
+	// 等待 DMA 通道空闲
+	while (DMA1_Channel5->CCR & DMA_CCR1_EN);
+	while (DMA1_Channel4->CCR & DMA_CCR1_EN);
 
-    // 配置 DMA 发送
-    DMA1_Channel5->CMAR = (uint32_t)txbuf;
-    DMA1_Channel5->CNDTR = len;
+	// 配置 DMA 发送
+	DMA1_Channel5->CMAR = (uint32_t)txbuf;
+	DMA1_Channel5->CNDTR = len;
 
-    // 配置 DMA 接收
-    DMA1_Channel4->CMAR = (uint32_t)rxbuf;
-    DMA1_Channel4->CNDTR = len;
+	// 配置 DMA 接收
+	DMA1_Channel4->CMAR = (uint32_t)rxbuf;
+	DMA1_Channel4->CNDTR = len;
 
-    // 清除 DMA 标志位
-    DMA_ClearFlag(DMA1_FLAG_TC5);
-    DMA_ClearFlag(DMA1_FLAG_TC4);
-    dma_tx_complete = 0;
-    dma_rx_complete = 0;
+	// 清除 DMA 标志位
+	DMA_ClearFlag(DMA1_FLAG_TC5);
+	DMA_ClearFlag(DMA1_FLAG_TC4);
+	dma_tx_complete = 0;
+	dma_rx_complete = 0;
 
-    // 使能 DMA 通道
-    DMA_Cmd(DMA1_Channel4, ENABLE);
-    DMA_Cmd(DMA1_Channel5, ENABLE);
+	// 使能 DMA 通道
+	DMA_Cmd(DMA1_Channel4, ENABLE);
+	DMA_Cmd(DMA1_Channel5, ENABLE);
 
-    // 等待传输完成
-    while (!dma_tx_complete);
-    while (!dma_rx_complete);
+	// 等待传输完成
+	while (!dma_tx_complete);
+	while (!dma_rx_complete);
 
-    // 等待 SPI 完成最后的数据传输
-    while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET);
-    while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_BSY) == SET);
-    while(DMA_GetCurrDataCounter(DMA1_Channel5)){
-        ;
-    }
-     while(DMA_GetCurrDataCounter(DMA1_Channel4)){
-        ;
-    }
+	// 等待 SPI 完成最后的数据传输
+	while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET);
+	while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_BSY) == SET);
+	while(DMA_GetCurrDataCounter(DMA1_Channel5)) {
+		;
+	}
+	while(DMA_GetCurrDataCounter(DMA1_Channel4)) {
+		;
+	}
 }
 
 
@@ -162,7 +162,7 @@ void SPI2_DMA_TransmitReceive(uint8_t* txbuf, uint8_t* rxbuf, uint16_t len) {
 // 	while (DMA_Channel_IsEnabled(DMA1_Channel5));
 // 	while (DMA_Channel_IsEnabled(DMA1_Channel4));
 
-	
+
 
 // 	/* 配置DMA发送 */
 // 	DMA1_Channel5->CMAR = (uint32_t)txbuf;
@@ -214,7 +214,7 @@ uint8_t SPI_ReadWriteByte(uint8_t TxData) {
 void SPI2_SendData_DMA(uint8_t* txbuf, uint16_t len) {
 	// 等待DMA通道空闲
 	// while (DMA1_Channel5->CCR & DMA_CCR1_EN);
-     while (DMA_Channel_IsEnabled(DMA1_Channel5) && DMA_Channel_IsEnabled(DMA1_Channel4));
+	while (DMA_Channel_IsEnabled(DMA1_Channel5) && DMA_Channel_IsEnabled(DMA1_Channel4));
 
 	// 配置DMA通道
 	DMA1_Channel5->CCR &= ~DMA_CCR1_EN;           // 关闭DMA通道
@@ -223,27 +223,27 @@ void SPI2_SendData_DMA(uint8_t* txbuf, uint16_t len) {
 	DMA1_Channel5->CNDTR = len;                   // 传输长度
 
 	DMA_ClearFlag(DMA1_FLAG_TC5);                 // 清除传输完成标志
-    DMA_ClearFlag(DMA1_FLAG_TC4);
-    dma_tx_complete = 0;
+	DMA_ClearFlag(DMA1_FLAG_TC4);
+	dma_tx_complete = 0;
 	dma_rx_complete = 0;
 
 	DMA_Cmd(DMA1_Channel5, ENABLE);
-    // DMA_Cmd(DMA1_Channel4, ENABLE);
+	// DMA_Cmd(DMA1_Channel4, ENABLE);
 
 	// 等待DMA传输完成（中断方式）
-	while (!dma_tx_complete){
+	while (!dma_tx_complete) {
 		;
 	}
-    while(DMA_GetCurrDataCounter(DMA1_Channel5)){
-        ;
-    }
-    //  while(DMA_GetCurrDataCounter(DMA1_Channel4)){
-    //     ;
-    // }
-    // while (!dma_rx_complete);
+	while(DMA_GetCurrDataCounter(DMA1_Channel5)) {
+		;
+	}
+	//  while(DMA_GetCurrDataCounter(DMA1_Channel4)){
+	//     ;
+	// }
+	// while (!dma_rx_complete);
 
 	DMA_Cmd(DMA1_Channel5, DISABLE);
-    // DMA_Cmd(DMA1_Channel4, DISABLE);
+	// DMA_Cmd(DMA1_Channel4, DISABLE);
 }
 
 

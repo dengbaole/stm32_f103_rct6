@@ -32,9 +32,9 @@ extern "C" {
  **********************/
 
 typedef struct lv_draw_sdl_img_header_t {
-    lv_img_header_t base;
-    SDL_Rect rect;
-    bool managed;
+	lv_img_header_t base;
+	SDL_Rect rect;
+	bool managed;
 } lv_draw_sdl_img_header_t;
 
 /**********************
@@ -69,9 +69,9 @@ typedef struct lv_draw_sdl_img_header_t {
  * this will be false too. So you'll need to check header.managed too.
  * @return Whether the image has been loaded successfully
  */
-bool lv_draw_sdl_img_load_texture(lv_draw_sdl_ctx_t * ctx, lv_draw_sdl_cache_key_head_img_t * key, size_t key_size,
-                                  const void * src, int32_t frame_id, SDL_Texture ** texture,
-                                  lv_draw_sdl_img_header_t ** header, bool * texture_in_cache);
+bool lv_draw_sdl_img_load_texture(lv_draw_sdl_ctx_t* ctx, lv_draw_sdl_cache_key_head_img_t* key, size_t key_size,
+								  const void* src, int32_t frame_id, SDL_Texture** texture,
+								  lv_draw_sdl_img_header_t** header, bool* texture_in_cache);
 /**********************
  *      MACROS
  **********************/

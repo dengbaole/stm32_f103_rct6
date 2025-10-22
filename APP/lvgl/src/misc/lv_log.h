@@ -49,7 +49,7 @@ typedef int8_t lv_log_level_t;
 /**
  * Log print function. Receives a string buffer to print".
  */
-typedef void (*lv_log_print_g_cb_t)(const char * buf);
+typedef void (*lv_log_print_g_cb_t)(const char* buf);
 
 /**********************
  * GLOBAL PROTOTYPES
@@ -69,7 +69,7 @@ void lv_log_register_print_cb(lv_log_print_g_cb_t print_cb);
  * @param format    printf-like format string
  * @param ...       parameters for `format`
  */
-void lv_log(const char * format, ...) LV_FORMAT_ATTRIBUTE(1, 2);
+void lv_log(const char* format, ...) LV_FORMAT_ATTRIBUTE(1, 2);
 
 /**
  * Add a log
@@ -80,8 +80,8 @@ void lv_log(const char * format, ...) LV_FORMAT_ATTRIBUTE(1, 2);
  * @param format    printf-like format string
  * @param ...       parameters for `format`
  */
-void _lv_log_add(lv_log_level_t level, const char * file, int line,
-                 const char * func, const char * format, ...) LV_FORMAT_ATTRIBUTE(5, 6);
+void _lv_log_add(lv_log_level_t level, const char* file, int line,
+				 const char* func, const char* format, ...) LV_FORMAT_ATTRIBUTE(5, 6);
 
 /**********************
  *      MACROS

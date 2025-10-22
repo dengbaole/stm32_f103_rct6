@@ -31,12 +31,12 @@ extern "C" {
  **********************/
 
 typedef struct lv_draw_sdl_context_internals_t {
-    lv_lru_t * texture_cache;
-    SDL_Texture * mask;
-    SDL_Texture * composition;
-    bool composition_cached;
-    SDL_Texture * target_backup;
-    uint8_t transform_count;
+	lv_lru_t* texture_cache;
+	SDL_Texture* mask;
+	SDL_Texture* composition;
+	bool composition_cached;
+	SDL_Texture* target_backup;
+	uint8_t transform_count;
 } lv_draw_sdl_context_internals_t;
 
 /**********************

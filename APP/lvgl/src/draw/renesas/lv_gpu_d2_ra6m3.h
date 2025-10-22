@@ -39,13 +39,13 @@ void lv_port_gpu_init(void);
 
 void lv_port_gpu_flush(void);
 
-void lv_port_gpu_blit(int32_t x, int32_t y, lv_color_t * dst, const lv_area_t * fill_area);
+void lv_port_gpu_blit(int32_t x, int32_t y, lv_color_t* dst, const lv_area_t* fill_area);
 
-void lv_draw_ra6m3_2d_blend(lv_draw_ctx_t * draw_ctx, const lv_draw_sw_blend_dsc_t * dsc);
+void lv_draw_ra6m3_2d_blend(lv_draw_ctx_t* draw_ctx, const lv_draw_sw_blend_dsc_t* dsc);
 
-void lv_draw_ra6m3_2d_ctx_init(lv_disp_drv_t * drv, lv_draw_ctx_t * draw_ctx);
+void lv_draw_ra6m3_2d_ctx_init(lv_disp_drv_t* drv, lv_draw_ctx_t* draw_ctx);
 
-void lv_draw_ra6m3_2d_ctx_deinit(lv_disp_drv_t * disp, lv_draw_ctx_t * draw_ctx);
+void lv_draw_ra6m3_2d_ctx_deinit(lv_disp_drv_t* disp, lv_draw_ctx_t* draw_ctx);
 
 #endif  /*LV_USE_GPU_GD32_IPA*/
 

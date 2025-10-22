@@ -65,8 +65,8 @@ extern "C" {
  * @param[in] color Color
  * @param[in] opa Opacity
  */
-void lv_gpu_nxp_pxp_fill(lv_color_t * dest_buf, const lv_area_t * dest_area, lv_coord_t dest_stride,
-                         lv_color_t color, lv_opa_t opa);
+void lv_gpu_nxp_pxp_fill(lv_color_t* dest_buf, const lv_area_t* dest_area, lv_coord_t dest_stride,
+						 lv_color_t color, lv_opa_t opa);
 
 /**
  * BLock Image Transfer - copy rectangular image from src_buf to dst_buf with effects.
@@ -82,9 +82,9 @@ void lv_gpu_nxp_pxp_fill(lv_color_t * dest_buf, const lv_area_t * dest_area, lv_
  * @param[in] opa Opacity
  * @param[in] angle Display rotation angle (90x)
  */
-void lv_gpu_nxp_pxp_blit(lv_color_t * dest_buf, const lv_area_t * dest_area, lv_coord_t dest_stride,
-                         const lv_color_t * src_buf, const lv_area_t * src_area, lv_coord_t src_stride,
-                         lv_opa_t opa, lv_disp_rot_t angle);
+void lv_gpu_nxp_pxp_blit(lv_color_t* dest_buf, const lv_area_t* dest_area, lv_coord_t dest_stride,
+						 const lv_color_t* src_buf, const lv_area_t* src_area, lv_coord_t src_stride,
+						 lv_opa_t opa, lv_disp_rot_t angle);
 
 /**
  * BLock Image Transfer - copy rectangular image from src_buf to dst_buf with transformation.
@@ -99,9 +99,9 @@ void lv_gpu_nxp_pxp_blit(lv_color_t * dest_buf, const lv_area_t * dest_area, lv_
  * @param[in] dsc Image descriptor
  * @param[in] cf Color format
  */
-void lv_gpu_nxp_pxp_blit_transform(lv_color_t * dest_buf, lv_area_t * dest_area, lv_coord_t dest_stride,
-                                   const lv_color_t * src_buf, const lv_area_t * src_area, lv_coord_t src_stride,
-                                   const lv_draw_img_dsc_t * dsc, lv_img_cf_t cf);
+void lv_gpu_nxp_pxp_blit_transform(lv_color_t* dest_buf, lv_area_t* dest_area, lv_coord_t dest_stride,
+								   const lv_color_t* src_buf, const lv_area_t* src_area, lv_coord_t src_stride,
+								   const lv_draw_img_dsc_t* dsc, lv_img_cf_t cf);
 
 /**
  * BLock Image Transfer - copy rectangular image from src_buf to dst_buf, no transformation or blending.
@@ -114,8 +114,8 @@ void lv_gpu_nxp_pxp_blit_transform(lv_color_t * dest_buf, lv_area_t * dest_area,
  * @param[in] src_area Area with relative coordinates of source buffer
  * @param[in] src_stride Stride of source buffer in pixels
  */
-void lv_gpu_nxp_pxp_buffer_copy(lv_color_t * dest_buf, const lv_area_t * dest_area, lv_coord_t dest_stride,
-                                const lv_color_t * src_buf, const lv_area_t * src_area, lv_coord_t src_stride);
+void lv_gpu_nxp_pxp_buffer_copy(lv_color_t* dest_buf, const lv_area_t* dest_area, lv_coord_t dest_stride,
+								const lv_color_t* src_buf, const lv_area_t* src_area, lv_coord_t src_stride);
 
 /**********************
  *      MACROS

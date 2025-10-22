@@ -80,7 +80,7 @@ extern "C" {
  * @retval LV_RES_OK Fill completed
  * @retval LV_RES_INV Error occurred (\see LV_GPU_NXP_VG_LITE_LOG_ERRORS)
  */
-lv_res_t lv_gpu_nxp_vglite_fill(const lv_area_t * dest_area, lv_color_t color, lv_opa_t opa);
+lv_res_t lv_gpu_nxp_vglite_fill(const lv_area_t* dest_area, lv_color_t color, lv_opa_t opa);
 
 #if VG_LITE_BLIT_SPLIT_ENABLED
 /**
@@ -98,9 +98,9 @@ lv_res_t lv_gpu_nxp_vglite_fill(const lv_area_t * dest_area, lv_color_t color, l
  * @retval LV_RES_OK Transfer complete
  * @retval LV_RES_INV Error occurred (\see LV_GPU_NXP_VG_LITE_LOG_ERRORS)
  */
-lv_res_t lv_gpu_nxp_vglite_blit_split(lv_color_t * dest_buf, lv_area_t * dest_area, lv_coord_t dest_stride,
-                                      const lv_color_t * src_buf, lv_area_t * src_area, lv_coord_t src_stride,
-                                      lv_opa_t opa);
+lv_res_t lv_gpu_nxp_vglite_blit_split(lv_color_t* dest_buf, lv_area_t* dest_area, lv_coord_t dest_stride,
+									  const lv_color_t* src_buf, lv_area_t* src_area, lv_coord_t src_stride,
+									  lv_opa_t opa);
 #else
 /**
  * BLock Image Transfer - copy rectangular image from src_buf to dst_buf with effects.
@@ -115,9 +115,9 @@ lv_res_t lv_gpu_nxp_vglite_blit_split(lv_color_t * dest_buf, lv_area_t * dest_ar
  * @retval LV_RES_OK Transfer complete
  * @retval LV_RES_INV Error occurred (\see LV_GPU_NXP_VG_LITE_LOG_ERRORS)
  */
-lv_res_t lv_gpu_nxp_vglite_blit(const lv_area_t * dest_area,
-                                const lv_color_t * src_buf, const lv_area_t * src_area, lv_coord_t src_stride,
-                                lv_opa_t opa);
+lv_res_t lv_gpu_nxp_vglite_blit(const lv_area_t* dest_area,
+								const lv_color_t* src_buf, const lv_area_t* src_area, lv_coord_t src_stride,
+								lv_opa_t opa);
 
 /**
  * BLock Image Transfer - copy rectangular image from src_buf to dst_buf with transformation.
@@ -133,9 +133,9 @@ lv_res_t lv_gpu_nxp_vglite_blit(const lv_area_t * dest_area,
  * @retval LV_RES_OK Transfer complete
  * @retval LV_RES_INV Error occurred (\see LV_GPU_NXP_VG_LITE_LOG_ERRORS)
  */
-lv_res_t lv_gpu_nxp_vglite_blit_transform(const lv_area_t * dest_area, const lv_area_t * clip_area,
-                                          const lv_color_t * src_buf, const lv_area_t * src_area, lv_coord_t src_stride,
-                                          const lv_draw_img_dsc_t * dsc);
+lv_res_t lv_gpu_nxp_vglite_blit_transform(const lv_area_t* dest_area, const lv_area_t* clip_area,
+		const lv_color_t* src_buf, const lv_area_t* src_area, lv_coord_t src_stride,
+		const lv_draw_img_dsc_t* dsc);
 
 #endif /*VG_LITE_BLIT_SPLIT_ENABLED*/
 
@@ -152,8 +152,8 @@ lv_res_t lv_gpu_nxp_vglite_blit_transform(const lv_area_t * dest_area, const lv_
  * @retval LV_RES_OK Transfer complete
  * @retval LV_RES_INV Error occurred (\see LV_GPU_NXP_VG_LITE_LOG_ERRORS)
  */
-lv_res_t lv_gpu_nxp_vglite_buffer_copy(lv_color_t * dest_buf, const lv_area_t * dest_area, lv_coord_t dest_stride,
-                                       const lv_color_t * src_buf, const lv_area_t * src_area, lv_coord_t src_stride);
+lv_res_t lv_gpu_nxp_vglite_buffer_copy(lv_color_t* dest_buf, const lv_area_t* dest_area, lv_coord_t dest_stride,
+									   const lv_color_t* src_buf, const lv_area_t* src_area, lv_coord_t src_stride);
 
 /**********************
  *      MACROS

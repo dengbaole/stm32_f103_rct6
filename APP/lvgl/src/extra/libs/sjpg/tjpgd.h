@@ -25,7 +25,7 @@ typedef uint8_t jd_yuv_t;
 /* Error code */
 typedef enum {
 	JDR_OK = 0,	/* 0: Succeeded */
-	JDR_INTR,	/* 1: Interrupted by output function */	
+	JDR_INTR,	/* 1: Interrupted by output function */
 	JDR_INP,	/* 2: Device error or wrong termination of input stream */
 	JDR_MEM1,	/* 3: Insufficient memory pool for the image */
 	JDR_MEM2,	/* 4: Insufficient stream input buffer */
@@ -81,8 +81,8 @@ struct JDEC {
 
 
 /* TJpgDec API functions */
-JRESULT jd_prepare (JDEC* jd, size_t (*infunc)(JDEC*,uint8_t*,size_t), void* pool, size_t sz_pool, void* dev);
-JRESULT jd_decomp (JDEC* jd, int (*outfunc)(JDEC*,void*,JRECT*), uint8_t scale);
+JRESULT jd_prepare (JDEC* jd, size_t (*infunc)(JDEC*, uint8_t*, size_t), void* pool, size_t sz_pool, void* dev);
+JRESULT jd_decomp (JDEC* jd, int (*outfunc)(JDEC*, void*, JRECT*), uint8_t scale);
 
 #endif /*LV_USE_SJPG*/
 

@@ -29,7 +29,7 @@ void main_handler(uevt_t* evt) {
 			SPI_FLASH_TYPE = flash_reas_id(); //读取FLASH ID.
 			lcd_init();//LCD初始化
 			led_init();//LED初始化
-			lcd_clear(0, 0, LCD_W, LCD_H, BLUE);	
+			lcd_clear(0, 0, LCD_W, LCD_H, RED);
 			LCD_BL_ON();//打开背光
 
 			lv_init();
@@ -37,25 +37,26 @@ void main_handler(uevt_t* evt) {
 			// lv_port_indev_init();  //触控
 
 
-			lv_obj_t *mybtn = lv_btn_create(lv_scr_act());
-			lv_obj_set_pos(mybtn,10,10);
-			lv_obj_set_size(mybtn,10,10);
+			lv_obj_t* mybtn = lv_btn_create(lv_scr_act());
+			lv_obj_set_pos(mybtn, 5, 5);
+			lv_obj_set_size(mybtn, 5, 5);
 
-			lv_obj_t *label_btn = lv_label_create(mybtn);
-			lv_obj_align(label_btn,LV_ALIGN_CENTER,0,0);
-			lv_label_set_text(label_btn,"test");
 
-			lv_obj_t *mylabel = lv_label_create(lv_scr_act());
-			lv_label_set_text(mylabel,"hello world!");
-			lv_obj_align(mylabel,LV_ALIGN_CENTER,0,0);
-			lv_obj_align_to(mybtn,mylabel,LV_ALIGN_OUT_TOP_MID,0,-20);
+			lv_obj_t* label_btn = lv_label_create(mybtn);
+			lv_obj_align(label_btn, LV_ALIGN_CENTER, 0, 0);
+			lv_label_set_text(label_btn, "test");
+
+//			lv_obj_t* mylabel = lv_label_create(lv_scr_act());
+//			lv_label_set_text(mylabel, "hello world!");
+//			lv_obj_align(mylabel, LV_ALIGN_CENTER, 0, 0);
+//			lv_obj_align_to(mybtn, mylabel, LV_ALIGN_OUT_TOP_MID, 0, 0);
 		case UEVT_RTC_10MS:
 			// if(started) {
 			// 	//LOG_HEAD("[%08d]:\n", tick++);
 			// }
 			// t_10ms++;
 			// // if(h % 3 == 0) {
-				
+
 			// // 	// LCD_ShowPicture2(0, 0,  fonts_10_12_num_array[h / 10 % 10]);
 			// // 	LCD_ShowPicture_test(0, 0,  0*25600*(h%30));
 
@@ -83,19 +84,19 @@ void main_handler(uevt_t* evt) {
 			// 		y += vy;  // 防止越界
 			// 	}
 
-				
+
 			// 	// index = display_num(index, 8,  100, torbo_num_bitmap, old_key_value);
 			// 	index = set_display_component(index, 0, 0, &flash_timeout_array[t_10ms / 3 % 30]);
 			// 	index = set_display_component(index, x, y, &flash_letter_array[t_10ms / 30 % 26]);
 			// 	index = set_display_component(index, 0, 0, NULL);
 			// 	display_component(default_component);
-				
-			// }
 
+			// }
+			lv_timer_handler();
 			break;
 		case UEVT_RTC_1MS:
 			// tick_1MS++;
-
+			lv_tick_inc(1);
 			break;
 
 		case UEVT_APP_START:

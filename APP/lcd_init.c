@@ -2,8 +2,8 @@
 
 
 uint8_t display_buff[DISPLAY_BUF_SIZE];
-uint8_t rx_buff[DISPLAY_BUF_SIZE+4];
-uint8_t tx_buff[DISPLAY_BUF_SIZE+4];
+uint8_t rx_buff[DISPLAY_BUF_SIZE + 4];
+uint8_t tx_buff[DISPLAY_BUF_SIZE + 4];
 
 
 void lcd_gpio_init(void) {
@@ -204,7 +204,7 @@ void lcd_init(void) {
 	}
 	LCD_WR_REG(0x21);     //Display inversion
 	LCD_WR_REG(0x29);     //Display on
-	
+
 }
 
 
@@ -258,19 +258,20 @@ void LCD_ShowPicture2(u16 x, u16 y, const sBITMAP* pic) {
 }
 
 void LCD_DrawPixel(u16 x, u16 y, u16 color) {
-    // 设置像素位置的窗口
-    tftSetWindows(x, y, x, y);
-    
-    TFT_RS_DATA();  // 数据模式
-    TFT_CS_LOW();
-    
-    // 发送颜色数据，高位和低位
-    SPI2_SendData_DMA(color>>4, 1);  // 发送2个字节（16位颜色）
-	SPI2_SendData_DMA(color&0xf, 1);  // 发送2个字节（16位颜色）
+	// 设置像素位置的窗口
+	uint8_t buff_temp[2];
+	buff_temp[0] = color >> 4;
+	buff_temp[1] = color & 0x0f;
+	tftSetWindows(x, y, x - 1, y - 1);
 
-    TFT_CS_HIGH();
+	TFT_RS_DATA();  // 数据模式
+	TFT_CS_LOW();
+
+	// 发送颜色数据，高位和低位
+	SPI2_SendData_DMA(buff_temp, 2);  // 发送2个字节（16位颜色）
+
+	TFT_CS_HIGH();
 }
-
 
 
 
@@ -294,8 +295,8 @@ void LCD_ShowPicture_test(u16 x, u16 y, uint32_t add) {
 		TFT_CS_LOW();
 		// for(uint16_t i = 0; i < 16; i++){
 		// SPI2_SendData_DMA(rx_buff, 1600);
-		
-		SPI2_DMA_TransmitReceive(rx_buff+1,tx_buff, 1600);//？？
+
+		SPI2_DMA_TransmitReceive(rx_buff + 1, tx_buff, 1600); //？？
 		// }
 
 		TFT_CS_HIGH();
@@ -345,13 +346,13 @@ void display_component(FLASH_sBITMAP_TABLE* bitmap_table) {
 				// //接收数据
 				// spi_dma_rx_date(rx_buff, (draw_h_end - draw_h_start) * bitmap_table[i].bitmap->w * 2);
 				// FLASH_CS_HIGH();
-				
+
 				//数据接收
 				W25Q128_ReadData(rx_buff, bitmap_table[i].bitmap->map_address + (draw_h_start - picture_h_start)* bitmap_table[i].bitmap->w * 2, (draw_h_end - draw_h_start) * bitmap_table[i].bitmap->w * 2);
 
 				if(bitmap_table[i].bitmap->h == DISPLAY_HEIGHT && bitmap_table[i].bitmap->w == DISPLAY_WIDTH) {
 					for(uint8_t k = 0; k < (draw_h_end - draw_h_start); k++) {
-						memcpy(&display_buff[(draw_h_start - current_screen_h_start + k)*DISPLAY_WIDTH * 2 + bitmap_table[i].x * 2], &rx_buff[k * bitmap_table[i].bitmap->w * 2+1], bitmap_table[i].bitmap->w * 2);
+						memcpy(&display_buff[(draw_h_start - current_screen_h_start + k)*DISPLAY_WIDTH * 2 + bitmap_table[i].x * 2], &rx_buff[k * bitmap_table[i].bitmap->w * 2 + 1], bitmap_table[i].bitmap->w * 2);
 					}
 				} else {
 					for(uint16_t k = 0; k < (draw_h_end - draw_h_start); k++) {
@@ -372,7 +373,7 @@ void display_component(FLASH_sBITMAP_TABLE* bitmap_table) {
 							// 检查是否为透明色
 							// if(pixel != 0x0000) {
 							// 复制像素到目标缓冲区
-							display_buff[dst_index] |= rx_buff[src_index+1];
+							display_buff[dst_index] |= rx_buff[src_index + 1];
 							display_buff[dst_index + 1] |= rx_buff[src_index + 2];
 							// }
 						}
@@ -393,7 +394,7 @@ void display_component(FLASH_sBITMAP_TABLE* bitmap_table) {
 
 		TFT_RS_DATA();  // 数据模式
 		TFT_CS_LOW();
-		SPI2_DMA_TransmitReceive(display_buff,tx_buff, DISPLAY_BUF_SIZE);//？？
+		SPI2_DMA_TransmitReceive(display_buff, tx_buff, DISPLAY_BUF_SIZE); //？？
 		TFT_CS_HIGH();
 	}
 }

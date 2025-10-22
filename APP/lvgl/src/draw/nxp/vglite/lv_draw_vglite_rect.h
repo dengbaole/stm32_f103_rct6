@@ -66,8 +66,8 @@ extern "C" {
  * @retval LV_RES_INV Error occurred (\see LV_GPU_NXP_VG_LITE_LOG_ERRORS)
  *
  */
-lv_res_t lv_gpu_nxp_vglite_draw_bg(const lv_area_t * coords, const lv_area_t * clip_area,
-                                   const lv_draw_rect_dsc_t * dsc);
+lv_res_t lv_gpu_nxp_vglite_draw_bg(const lv_area_t* coords, const lv_area_t* clip_area,
+								   const lv_draw_rect_dsc_t* dsc);
 
 /**
  * Draw rectangle border/outline shape with effects (rounded corners, opacity)
@@ -81,8 +81,8 @@ lv_res_t lv_gpu_nxp_vglite_draw_bg(const lv_area_t * coords, const lv_area_t * c
  * @retval LV_RES_INV Error occurred (\see LV_GPU_NXP_VG_LITE_LOG_ERRORS)
  *
  */
-lv_res_t lv_gpu_nxp_vglite_draw_border_generic(const lv_area_t * coords, const lv_area_t * clip_area,
-                                               const lv_draw_rect_dsc_t * dsc, bool border);
+lv_res_t lv_gpu_nxp_vglite_draw_border_generic(const lv_area_t* coords, const lv_area_t* clip_area,
+		const lv_draw_rect_dsc_t* dsc, bool border);
 
 /**********************
  *      MACROS

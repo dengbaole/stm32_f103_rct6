@@ -79,7 +79,7 @@ extern "C" {
  *
  * @param[in] clip_area Clip area with relative coordinates of destination buffer
  */
-static inline void lv_vglite_set_scissor(const lv_area_t * clip_area);
+static inline void lv_vglite_set_scissor(const lv_area_t* clip_area);
 
 /**
  * Disable scissor.
@@ -101,8 +101,8 @@ static inline void lv_vglite_disable_scissor(void);
  * @retval LV_RES_OK Operation completed
  * @retval LV_RES_INV Error occurred (\see LV_GPU_NXP_VG_LITE_LOG_ERRORS)
  */
-lv_res_t lv_vglite_premult_and_swizzle(vg_lite_color_t * vg_col32, lv_color32_t lv_col32, lv_opa_t opa,
-                                       vg_lite_buffer_format_t vg_col_format);
+lv_res_t lv_vglite_premult_and_swizzle(vg_lite_color_t* vg_col32, lv_color32_t lv_col32, lv_opa_t opa,
+									   vg_lite_buffer_format_t vg_col_format);
 
 /**
  * Get vglite blend mode.
@@ -126,67 +126,65 @@ lv_res_t lv_vglite_run(void);
  **********************/
 
 #define VG_LITE_COND_STOP(cond, txt)          \
-    do {                                      \
-        if (cond) {                           \
-            LV_LOG_ERROR("%s. STOP!", txt);   \
-            for ( ; ; );                      \
-        }                                     \
-    } while(0)
+	do {                                      \
+		if (cond) {                           \
+			LV_LOG_ERROR("%s. STOP!", txt);   \
+			for ( ; ; );                      \
+		}                                     \
+	} while(0)
 
 #if LV_GPU_NXP_VG_LITE_LOG_ERRORS
 #define VG_LITE_ERR_RETURN_INV(err, fmt, ...) \
-    do {                                      \
-        if(err != VG_LITE_SUCCESS) {          \
-            LV_LOG_ERROR(fmt" (err = %d)",    \
-                         err, ##__VA_ARGS__); \
-            return LV_RES_INV;                \
-        }                                     \
-    } while (0)
+	do {                                      \
+		if(err != VG_LITE_SUCCESS) {          \
+			LV_LOG_ERROR(fmt" (err = %d)",    \
+						 err, ##__VA_ARGS__); \
+			return LV_RES_INV;                \
+		}                                     \
+	} while (0)
 #else
 #define VG_LITE_ERR_RETURN_INV(err, fmt, ...) \
-    do {                                      \
-        if(err != VG_LITE_SUCCESS) {          \
-            return LV_RES_INV;                \
-        }                                     \
-    }while(0)
+	do {                                      \
+		if(err != VG_LITE_SUCCESS) {          \
+			return LV_RES_INV;                \
+		}                                     \
+	}while(0)
 #endif /*LV_GPU_NXP_VG_LITE_LOG_ERRORS*/
 
 #if LV_GPU_NXP_VG_LITE_LOG_TRACES
 #define VG_LITE_LOG_TRACE(fmt, ...)           \
-    do {                                      \
-        LV_LOG(fmt, ##__VA_ARGS__);     \
-    } while (0)
+	do {                                      \
+		LV_LOG(fmt, ##__VA_ARGS__);     \
+	} while (0)
 
 #define VG_LITE_RETURN_INV(fmt, ...)          \
-    do {                                      \
-        LV_LOG_ERROR(fmt, ##__VA_ARGS__);     \
-        return LV_RES_INV;                    \
-    } while (0)
+	do {                                      \
+		LV_LOG_ERROR(fmt, ##__VA_ARGS__);     \
+		return LV_RES_INV;                    \
+	} while (0)
 #else
 #define VG_LITE_LOG_TRACE(fmt, ...)           \
-    do {                                      \
-    } while (0)
+	do {                                      \
+	} while (0)
 #define VG_LITE_RETURN_INV(fmt, ...)          \
-    do {                                      \
-        return LV_RES_INV;                    \
-    }while(0)
+	do {                                      \
+		return LV_RES_INV;                    \
+	}while(0)
 #endif /*LV_GPU_NXP_VG_LITE_LOG_TRACES*/
 
 /**********************
  *   STATIC FUNCTIONS
  **********************/
 
-static inline void lv_vglite_set_scissor(const lv_area_t * clip_area)
-{
-    vg_lite_enable_scissor();
-    vg_lite_set_scissor((int32_t)clip_area->x1, (int32_t)clip_area->y1,
-                        (int32_t)lv_area_get_width(clip_area),
-                        (int32_t)lv_area_get_height(clip_area));
+static inline void lv_vglite_set_scissor(const lv_area_t* clip_area) {
+	vg_lite_enable_scissor();
+	vg_lite_set_scissor((int32_t)clip_area->x1, (int32_t)clip_area->y1,
+						(int32_t)lv_area_get_width(clip_area),
+						(int32_t)lv_area_get_height(clip_area));
 }
 
-static inline void lv_vglite_disable_scissor(void)
-{
-    vg_lite_disable_scissor();
+static inline void lv_vglite_disable_scissor(void) {
+	vg_lite_disable_scissor();
 }
 
 #endif /*LV_USE_GPU_NXP_VG_LITE*/

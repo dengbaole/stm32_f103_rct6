@@ -34,7 +34,7 @@ extern const lv_obj_class_t lv_calendar_header_dropdown_class;
  * @param parent    pointer to a calendar object.
  * @return          the created header
  */
-lv_obj_t * lv_calendar_header_dropdown_create(lv_obj_t * parent);
+lv_obj_t* lv_calendar_header_dropdown_create(lv_obj_t* parent);
 
 /**
  * Sets a custom calendar year list
@@ -43,7 +43,7 @@ lv_obj_t * lv_calendar_header_dropdown_create(lv_obj_t * parent);
  *                      E.g. `const char * years = "2023\n2022\n2021\n2020\n2019"
  *                      Only the pointer will be saved so this variable can't be local which will be destroyed later.
  */
-void lv_calendar_header_dropdown_set_year_list(lv_obj_t * parent, const char * years_list);
+void lv_calendar_header_dropdown_set_year_list(lv_obj_t* parent, const char* years_list);
 
 /**********************
  *      MACROS
