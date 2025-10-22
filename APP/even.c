@@ -7,6 +7,12 @@
 #include "pic.h"
 
 
+
+//lvgl
+#include "lvgl.h"
+#include "lv_port_disp.h"
+//#include "lv_port_indev.h"
+
 //处理打印测试
 void main_handler(uevt_t* evt) {
 	char time_string[9]; // HH:MM:SS 格式需要 9 个字符（包括结束符）
@@ -23,75 +29,73 @@ void main_handler(uevt_t* evt) {
 			SPI_FLASH_TYPE = flash_reas_id(); //读取FLASH ID.
 			lcd_init();//LCD初始化
 			led_init();//LED初始化
-			lcd_clear(0, 0, LCD_W, LCD_H, WHITE);
-			// LCD_ShowPicture(20, 45, 120, 29, gImage_pic1);
-			// LCD_ShowPicture2(0, 0,  &boot_00015_bmp);
-			// LCD_ShowString(10,0,"stm32f103_rct6!",WHITE,BLACK,16,0);
-			// LCD_ShowPicture_test(0, 0, 0);
+			lcd_clear(0, 0, LCD_W, LCD_H, BLUE);	
 			LCD_BL_ON();//打开背光
-			break;
+
+			lv_init();
+			lv_port_disp_init();//显示
+			// lv_port_indev_init();  //触控
+
+
+			lv_obj_t *mybtn = lv_btn_create(lv_scr_act());
+			lv_obj_set_pos(mybtn,10,10);
+			lv_obj_set_size(mybtn,10,10);
+
+			lv_obj_t *label_btn = lv_label_create(mybtn);
+			lv_obj_align(label_btn,LV_ALIGN_CENTER,0,0);
+			lv_label_set_text(label_btn,"test");
+
+			lv_obj_t *mylabel = lv_label_create(lv_scr_act());
+			lv_label_set_text(mylabel,"hello world!");
+			lv_obj_align(mylabel,LV_ALIGN_CENTER,0,0);
+			lv_obj_align_to(mybtn,mylabel,LV_ALIGN_OUT_TOP_MID,0,-20);
 		case UEVT_RTC_10MS:
-			if(started) {
-				//LOG_HEAD("[%08d]:\n", tick++);
-			}
-			t_10ms++;
-			// if(h % 3 == 0) {
+			// if(started) {
+			// 	//LOG_HEAD("[%08d]:\n", tick++);
+			// }
+			// t_10ms++;
+			// // if(h % 3 == 0) {
 				
+			// // 	// LCD_ShowPicture2(0, 0,  fonts_10_12_num_array[h / 10 % 10]);
+			// // 	LCD_ShowPicture_test(0, 0,  0*25600*(h%30));
+
+			// // }
+			// if(t_10ms % 3 == 0) {
+			// 	// LCD_ShowPicture2(0, 0,  fonts_22_28_num_array[h / 10 % 35]);
 			// 	// LCD_ShowPicture2(0, 0,  fonts_10_12_num_array[h / 10 % 10]);
-			// 	LCD_ShowPicture_test(0, 0,  0*25600*(h%30));
+			// 	// LCD_ShowPicture_test(0, 0,  0xbbf1c+25600*(h/3%30));
 
-			// }
-			if(t_10ms % 3 == 0) {
-				// LCD_ShowPicture2(0, 0,  fonts_22_28_num_array[h / 10 % 35]);
-				// LCD_ShowPicture2(0, 0,  fonts_10_12_num_array[h / 10 % 10]);
-				// LCD_ShowPicture_test(0, 0,  0xbbf1c+25600*(h/3%30));
-
-					static int x = 0;
-				static int y = 0;
-				static int vx = 2;  // 水平方向速度
-				static int vy = 1;  // 垂直方向速度
-				uint8_t	index = 0;
-				 // 更新位置
-				x += vx;
-				y += vy;
-				// 边界检测和反射
-				if (x <= 0 || x >= 80 - flash_letter_array[0].w) {
-					vx = -vx;
-					x += vx;  // 防止越界
-				}
-				if (y <= 0 || y >= 160 - flash_letter_array[0].h) {
-					vy = -vy;
-					y += vy;  // 防止越界
-				}
+			// 		static int x = 0;
+			// 	static int y = 0;
+			// 	static int vx = 2;  // 水平方向速度
+			// 	static int vy = 1;  // 垂直方向速度
+			// 	uint8_t	index = 0;
+			// 	 // 更新位置
+			// 	x += vx;
+			// 	y += vy;
+			// 	// 边界检测和反射
+			// 	if (x <= 0 || x >= 80 - flash_letter_array[0].w) {
+			// 		vx = -vx;
+			// 		x += vx;  // 防止越界
+			// 	}
+			// 	if (y <= 0 || y >= 160 - flash_letter_array[0].h) {
+			// 		vy = -vy;
+			// 		y += vy;  // 防止越界
+			// 	}
 
 				
-				// index = display_num(index, 8,  100, torbo_num_bitmap, old_key_value);
-				index = set_display_component(index, 0, 0, &flash_timeout_array[t_10ms / 3 % 30]);
-				index = set_display_component(index, x, y, &flash_letter_array[t_10ms / 30 % 26]);
-				index = set_display_component(index, 0, 0, NULL);
-				display_component(default_component);
+			// 	// index = display_num(index, 8,  100, torbo_num_bitmap, old_key_value);
+			// 	index = set_display_component(index, 0, 0, &flash_timeout_array[t_10ms / 3 % 30]);
+			// 	index = set_display_component(index, x, y, &flash_letter_array[t_10ms / 30 % 26]);
+			// 	index = set_display_component(index, 0, 0, NULL);
+			// 	display_component(default_component);
 				
-			}
-			// if(h % 10 == 5) {
-			// 	// LCD_ShowPicture2(0, 0,  &boot_00000_bmp);
 			// }
-			// lcd_clear(0, 0, LCD_W, LCD_H, BLACK);
-			// LCD_ShowPicture(20, 45, 120, 29, gImage_pic1);
-			//    LCD_ShowPicture2(h%20, 45,  &boot_00000_bmp);
-			// if(pwm_n <200){
-			// 	pwm_n++;
-			// }else{
-			// 	pwm_n = 0;
-			// }
-			// setledg_pwm(spwmWave[pwm_n]);
+
 			break;
 		case UEVT_RTC_1MS:
 			// tick_1MS++;
-			// if(tick_1MS % 1000 == 500) {
-			// 	LED_R(OFF);
-			// } else if(tick_1MS % 1000 == 0) {
-			// 	LED_R(ON);
-			// }
+
 			break;
 
 		case UEVT_APP_START:

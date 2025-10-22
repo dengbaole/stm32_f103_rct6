@@ -82,7 +82,7 @@
 
 #define DISPLAY_WIDTH 80
 #define DISPLAY_HEIGHT 160
-#define SPLIT_SCREEN 16   //DISPLAY_WIDTH * DISPLAY_HEIGHT*2/SPLIT_SCREEN 需要整除
+#define SPLIT_SCREEN 160   //DISPLAY_WIDTH * DISPLAY_HEIGHT*2/SPLIT_SCREEN 需要整除
 #define DISPLAY_BUF_SIZE (DISPLAY_WIDTH * DISPLAY_HEIGHT*2/SPLIT_SCREEN)
 extern uint8_t display_buff[DISPLAY_BUF_SIZE];
 extern uint8_t rx_buff[DISPLAY_BUF_SIZE+4];
@@ -97,6 +97,7 @@ void tftSetWindows(u16 x1, u16 y1, u16 x2, u16 y2); //�������꺯�
 void lcd_init(void);//LCD��ʼ��
 void lcd_clear(u16 xsta, u16 ysta, u16 xend, u16 yend, u16 color);
 void LCD_ShowPicture2(u16 x, u16 y, const sBITMAP* pic);
+void LCD_DrawPixel(u16 x, u16 y, u16 color);
 void LCD_ShowPicture_test(u16 x, u16 y, uint32_t add);
 void display_component(FLASH_sBITMAP_TABLE* bitmap_table);
 #endif

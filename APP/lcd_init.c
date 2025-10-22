@@ -217,11 +217,11 @@ void lcd_clear(u16 xsta, u16 ysta, u16 xend, u16 yend, u16 color) {
 	// 		LCD_WR_DATA(color);
 	// 	}
 	// }
-	memset(display_buff, 0x00, 1600);
+	memset(display_buff, 0x00, 160);
 	TFT_RS_DATA();  // 数据模式
 	TFT_CS_LOW();
-	for(uint16_t i = 0; i < 16; i++) {
-		SPI2_SendData_DMA(display_buff, 1600);
+	for(uint16_t i = 0; i < 160; i++) {
+		SPI2_SendData_DMA(display_buff, 160);
 	}
 
 	TFT_CS_HIGH();
@@ -255,6 +255,20 @@ void LCD_ShowPicture2(u16 x, u16 y, const sBITMAP* pic) {
 	}
 
 	TFT_CS_HIGH();
+}
+
+void LCD_DrawPixel(u16 x, u16 y, u16 color) {
+    // 设置像素位置的窗口
+    tftSetWindows(x, y, x, y);
+    
+    TFT_RS_DATA();  // 数据模式
+    TFT_CS_LOW();
+    
+    // 发送颜色数据，高位和低位
+    SPI2_SendData_DMA(color>>4, 1);  // 发送2个字节（16位颜色）
+	SPI2_SendData_DMA(color&0xf, 1);  // 发送2个字节（16位颜色）
+
+    TFT_CS_HIGH();
 }
 
 
